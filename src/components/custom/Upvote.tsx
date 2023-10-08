@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 
-const Upvote = () => {
-  const [upvote, setUpvote] = useState(0);
+interface UpvoteProps {
+  initialUpvotes?: number;
+}
+
+const Upvote = ({ initialUpvotes }: UpvoteProps) => {
+  const [upvote, setUpvote] = useState(initialUpvotes);
 
   const handleUpvoteClick = () => {
-    setUpvote(upvote + 1);
+    if (upvote === undefined) {
+      setUpvote(0);
+    } else {
+      setUpvote(upvote + 1);
+    }
   };
 
   return (
