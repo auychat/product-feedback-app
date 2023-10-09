@@ -1,5 +1,6 @@
 export interface IFeedbackContextValue {
   suggestProduct: IProductRequests[];
+  nonSuggestProduct: IProductRequests[];
   sortingCriteria: string;
   setSortingCriteria: (criteria: string) => void;
   sortSuggestProduct: IProductRequests[];

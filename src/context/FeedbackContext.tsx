@@ -7,6 +7,7 @@ import { IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
   suggestProduct: [],
+  nonSuggestProduct: [],
   sortingCriteria: "Most Upvotes",
   setSortingCriteria: () => {},
   sortSuggestProduct: [],
@@ -22,6 +23,10 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const suggestProduct: IProductRequests[] = productRequests.filter(
     (product) => product.status === "suggestion"
+  );
+
+  const nonSuggestProduct: IProductRequests[] = productRequests.filter(
+    (product) => product.status !== "suggestion"
   );
 
   // Function to sort suggestProduct based on criteria
@@ -46,6 +51,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const contextValue: IFeedbackContextValue = {
     suggestProduct,
+    nonSuggestProduct,
     sortingCriteria,
     setSortingCriteria,
     sortSuggestProduct,

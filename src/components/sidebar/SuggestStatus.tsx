@@ -1,3 +1,5 @@
+import Roadmap from "@/app/roadmap/page";
+import Link from "next/link";
 import React from "react";
 
 const SuggestStatus = () => {
@@ -23,7 +25,7 @@ const SuggestStatus = () => {
     <div className="w-[255px] min-h-[166px] p-6 bg-white rounded-[10px] shadow-sm">
       <div className="flex justify-between items-center">
         <h2 className="text-hm text-blue-dark">Roadmap</h2>
-        <p className="text-b3 text-blue-primary font-bold underline">View</p>
+        <Link href="/roadmap" className="text-b3 text-blue-primary font-bold underline">View</Link>
       </div>
 
       {virtualData.map((data, index) => (
