@@ -1,8 +1,12 @@
-import React from "react";
+import React,{useContext} from "react";
 import Select from "../custom/Select";
 import Button from "../custom/Button";
+import { FeedbackContext } from "@/context/FeedbackContext";
 
 const Header = () => {
+
+  const { suggestProduct } = useContext(FeedbackContext);
+  const suggestionCount = suggestProduct.length;
   return (
     <div className="bg-blue-secondary h-[72px] w-full rounded-[10px]">
       <div className="flex items-center justify-between">
@@ -17,7 +21,7 @@ const Header = () => {
                 fillRule="nonzero"
               />
             </svg>
-            <h3 className="text-hm text-white">6 Suggestions</h3>
+            <h3 className="text-hm text-white">{suggestionCount} Suggestions</h3>
           </div>
 
           {/* Sort by */}

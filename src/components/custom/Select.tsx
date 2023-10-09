@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { FeedbackContext } from "@/context/FeedbackContext";
 
 interface SelectProps {
   //   options: string[];
@@ -15,12 +16,14 @@ const Select = ({ defaultOption }: SelectProps) => {
 
   const [selectedOption, setSelectedOption] = useState(defaultOption);
   const [isOpen, setIsOpen] = useState(false);
+  const { setSortingCriteria } = useContext(FeedbackContext);
 
-//   console.log("isOpen", isOpen);
-//   console.log("Selected Option", selectedOption);
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
+
+    // Update sortingCriteria in context
+    setSortingCriteria(option);
   };
 
   return (

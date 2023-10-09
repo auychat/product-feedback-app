@@ -1,24 +1,25 @@
-import React from "react";
-import { dummyData } from "@/app/pages/api/dummyData";
+import React, {useContext} from "react";
 import Upvote from "../custom/Upvote";
 import CategoryTag from "../custom/CategoryTag";
+import { FeedbackContext } from "@/context/FeedbackContext";
+
 
 const SuggestionItem = () => {
-  const productRequests = dummyData.productRequests;
-  const suggestProduct = productRequests.filter(
-    (product) => product.status === "suggestion"
-  );
+  const {sortSuggestProduct} = useContext(FeedbackContext);
 
   return (
     <>
-      {suggestProduct.map((product) => (
+      {sortSuggestProduct.map((product) => (
         <div
           key={product.id}
           className="w-full min-h-[151px] bg-white rounded-[10px] shadow-sm flex items-center"
         >
           <div className="py-7 px-8 flex gap-6 w-full justify-between">
             <div className="flex gap-10">
+              {/* Upvote number */}
               <Upvote initialUpvotes={product.upvotes} />
+
+              {/* Title description */}
               <div className="flex flex-col gap-3">
                 <h2 className="text-hm text-blue-dark">{product.title}</h2>
                 <p className="text-b1 text-gray-text font-normal">
@@ -29,6 +30,8 @@ const SuggestionItem = () => {
                 </div>
               </div>
             </div>
+
+            {/* Comment */}
             <div className="flex gap-2 items-center">
               {/* Icon Comment */}
               <svg width="18" height="16" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +41,7 @@ const SuggestionItem = () => {
                   fillRule="nonzero"
                 />
               </svg>
-
+              {/* Comment Count Number */}
               <p
                 className={`text-b1 text-blue-dark font-bold ${
                   product.comments?.length === 0 ||
