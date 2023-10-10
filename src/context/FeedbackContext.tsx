@@ -29,6 +29,17 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     (product) => product.status !== "suggestion"
   );
 
+  // Function to calculate the total comment count for a product (including replies)
+  const toTalCommentCount = (product: IProductRequests): number => {
+    let  totalComment = product.comments?.length ?? 0;
+    if (product.comments) {
+      product.comments.forEach((comment) => {
+        totalComment += comment.replies?.length ?? 0;
+      })
+    }
+    return totalComment;
+  };
+
   // Function to sort suggestProduct based on criteria
   const sortSuggestProduct = useMemo(() => {
     let sortedProductRequest = [...suggestProduct];
@@ -39,11 +50,11 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
       sortedProductRequest.sort((a, b) => a.upvotes - b.upvotes);
     } else if (sortingCriteria === "Most Comments") {
       sortedProductRequest.sort(
-        (a, b) => (b.comments?.length || 0) - (a.comments?.length || 0)
+        (a,b) => toTalCommentCount(b) - toTalCommentCount(a)
       );
     } else if (sortingCriteria === "Least Comments") {
       sortedProductRequest.sort(
-        (a, b) => (a.comments?.length || 0) - (b.comments?.length || 0)
+        (a,b) => toTalCommentCount(a) - toTalCommentCount(b)
       );
     }
     return sortedProductRequest;

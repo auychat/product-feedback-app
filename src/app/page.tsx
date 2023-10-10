@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <main className="bg-gray-background">
-      <div className="max-w-[1110px] min-h-[1024px] mx-auto flex gap-[30px] pt-[94px]">
+      <div className="max-w-[1110px] min-h-[1024px] mx-auto flex gap-[30px] pt-[94px] pb-[129px]">
         <Sidebar />
 
         <Content />
