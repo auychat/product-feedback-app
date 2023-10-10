@@ -2,18 +2,21 @@ import React, {useContext} from "react";
 import Upvote from "../custom/Upvote";
 import CategoryTag from "../custom/CategoryTag";
 import Comment from "../custom/Comment";
-import { FeedbackContext } from "@/context/FeedbackContext";
+import { IProductRequests } from "@/context/FeedbackInterface";
 
+interface SuggestionItemProps {
+  feedbackItems : IProductRequests[];
+}
 
-const SuggestionItem = () => {
-  const {sortSuggestProduct} = useContext(FeedbackContext);
+const SuggestionItem = ({feedbackItems}: SuggestionItemProps) => {
+  // const {sortSuggestProduct} = useContext(FeedbackContext);
 
   return (
     <>
-      {sortSuggestProduct.map((product) => (
+      {feedbackItems.map((product) => (
         <div
           key={product.id}
-          className="w-full min-h-[151px] bg-white rounded-[10px] shadow-sm flex items-center"
+          className="w-full min-h-[151px] bg-white rounded-[10px] shadow-sm flex items-center cursor-pointer"
         >
           <div className="py-7 px-8 flex gap-6 w-full justify-between">
             <div className="flex gap-10">
@@ -22,7 +25,7 @@ const SuggestionItem = () => {
 
               {/* Title description */}
               <div className="flex flex-col gap-3">
-                <h2 className="text-hm text-blue-dark">{product.title}</h2>
+                <h2 className="text-hm text-blue-dark hover:text-blue-primary">{product.title}</h2>
                 <p className="text-b1 text-gray-text font-normal">
                   {product.description}
                 </p>

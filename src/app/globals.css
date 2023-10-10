@@ -15,3 +15,10 @@
 body {
   
 }
+
+textarea {
+    resize: none;
+    appearance: none;
+    outline: none;
+}
+

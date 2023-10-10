@@ -14,8 +14,8 @@ const CategoryTag = ({ children }: CategoryTagProps) => {
   return (
     <button
       onClick={handleClickActive}
-      className={`flex items-center justify-center min-w-[48px] h-[30px] py-2 px-4 bg-[#F2F4FE] hover:bg-[#CFD7FF] rounded-[10px] ${
-        isActive ? "bg-[#4661E6]" : ""
+      className={`flex items-center justify-center min-w-[48px] h-[30px] py-2 px-4 hover:bg-[#CFD7FF] rounded-[10px] ${
+        isActive ? "bg-[#4661E6]" : "bg-[#F2F4FE]"
       }`}
     >
       <p
