@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/custom/Button";
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 import SelectFeature from "@/components/custom/SelectFeature";
 import Image from "next/image";
@@ -70,11 +70,22 @@ const NewFeedback = () => {
                   Add a short, descriptive headline
                 </h5>
               </div>
-              <textarea
-                id="feedback-title"
-                {...register("title", { required: true })}
-                className="w-full h-[48px] bg-gray-background p-4 rounded-[5px] inline-block align-middle text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
-              ></textarea>
+              <div>
+                <input
+                  id="feedback-title"
+                  {...register("title", { required: true })}
+                  className={`w-full h-[48px] bg-gray-background p-4 rounded-[5px] inline-block align-middle text-b2 font-normal text-blue-dark outline-none  ${
+                    errors.title
+                      ? "border border-red-500"
+                      : "focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
+                  }`}
+                />
+                {errors.title && (
+                  <p className="text-red-500 text-b2 font-normal">
+                    Can&apos;t be empty
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Category */}
@@ -109,11 +120,22 @@ const NewFeedback = () => {
                   added, etc.
                 </h5>
               </div>
-              <textarea
-                id="feedback-detail"
-                {...register("description", { required: true })}
-                className="w-full h-[96px] bg-gray-background p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
-              ></textarea>
+              <div>
+                <textarea
+                  id="feedback-detail"
+                  {...register("description", { required: true })}
+                  className={`w-full h-[96px] bg-gray-background p-4 rounded-[5px] text-b2 font-normal text-blue-dark  overflow-hidden ${
+                    errors.description
+                      ? "border border-red-500"
+                      : "focus:border focus:border-blue-primary focus:ring-blue-primary"
+                  }`}
+                />
+                {errors.description && (
+                  <p className="text-red-500 text-b2 font-normal">
+                    Can&apos;t be empty
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Button */}

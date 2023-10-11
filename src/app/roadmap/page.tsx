@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 const Roadmap = () => {
   const router = useRouter();
   const { nonSuggestProduct } = useContext(FeedbackContext);
-  console.log("nonSuggestProduct", nonSuggestProduct)
   const plannedStatus = nonSuggestProduct.filter(
     (product) => product.status === "planned"
   );
@@ -42,7 +41,7 @@ const Roadmap = () => {
             {/* Button +Add Feedback */}
             <div className="pr-4">
               <Button
-                onClick={() => console.log("Click")}
+                onClick={() => router.push("/new-feedback")}
                 btnColor="purple-light"
               >
                 + Add Feedback
