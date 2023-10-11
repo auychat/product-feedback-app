@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 const Roadmap = () => {
   const router = useRouter();
   const { nonSuggestProduct } = useContext(FeedbackContext);
+  console.log("nonSuggestProduct", nonSuggestProduct)
   const plannedStatus = nonSuggestProduct.filter(
     (product) => product.status === "planned"
   );
@@ -96,7 +97,7 @@ const Roadmap = () => {
 
                   {/* Upvote and Comment */}
                   <div className="flex justify-between items-center">
-                    <Upvote initialUpvotes={item.upvotes} />
+                    <Upvote initialUpvotes={item.upvotes} feedbackId={item.id} />
                     <Comment commentCount={item.comments?.length} />
                   </div>
                 </div>
@@ -149,7 +150,7 @@ const Roadmap = () => {
 
                   {/* Upvote and Comment */}
                   <div className="flex justify-between items-center">
-                    <Upvote initialUpvotes={item.upvotes} />
+                    <Upvote initialUpvotes={item.upvotes}  feedbackId={item.id}/>
                     <Comment commentCount={item.comments?.length} />
                   </div>
                 </div>
@@ -200,7 +201,7 @@ const Roadmap = () => {
 
                   {/* Upvote and Comment */}
                   <div className="flex justify-between items-center">
-                    <Upvote initialUpvotes={item.upvotes} />
+                    <Upvote initialUpvotes={item.upvotes}  feedbackId={item.id}/>
                     <Comment commentCount={item.comments?.length} />
                   </div>
                 </div>

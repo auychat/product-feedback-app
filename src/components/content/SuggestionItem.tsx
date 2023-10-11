@@ -30,7 +30,7 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
           <div className="py-7 px-8 flex gap-6 w-full justify-between">
             <div className="flex gap-10">
               {/* Upvote number */}
-              <Upvote initialUpvotes={product.upvotes} />
+              <Upvote initialUpvotes={product.upvotes} feedbackId={product.id} />
 
               {/* Title description */}
               <div className="flex flex-col gap-3">

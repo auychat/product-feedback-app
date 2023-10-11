@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { FeedbackContext } from "@/context/FeedbackContext";
 
 interface UpvoteProps {
   initialUpvotes?: number;
+  feedbackId?: number;
 }
 
-const Upvote = ({ initialUpvotes }: UpvoteProps) => {
+const Upvote = ({ initialUpvotes, feedbackId }: UpvoteProps) => {
   const [upvote, setUpvote] = useState(initialUpvotes);
+  const { updateUpvote, allFeedback } = useContext(FeedbackContext);
 
   const handleUpvoteClick = () => {
     if (upvote === undefined) {
       setUpvote(0);
     } else {
-      setUpvote(upvote + 1);
+      feedbackId && updateUpvote(feedbackId);
     }
   };
+
+  const upvotesNumber = allFeedback.find(
+    (feedback) => feedback.id === feedbackId
+  )?.upvotes;
+
+  // Update upvote when the upvote state changes
+  useEffect(() => {
+    const upvoteValue = allFeedback.find(
+      (feedback) => feedback.id === feedbackId
+    )?.upvotes;
+    setUpvote(upvoteValue);
+  }, [allFeedback, feedbackId, upvotesNumber]);
 
   return (
     <button
