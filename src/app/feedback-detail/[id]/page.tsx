@@ -32,7 +32,7 @@ const FeedbackDetail = () => {
             Go Back
           </Button>
           <Button
-            onClick={() => console.log("Edit Feedback")}
+            onClick={() => router.push("/edit-feedback")}
             btnColor="blue-primary"
           >
             Edit Feedback

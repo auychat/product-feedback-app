@@ -59,7 +59,7 @@ const NewFeedback = () => {
                 Choose a category for your feedback
               </h5>
             </div>
-            <SelectFeature defaultOption="Feature" />
+            <SelectFeature optionType="category" defaultSelect="Feature" />
           </div>
 
           {/* Feedback Detail */}
