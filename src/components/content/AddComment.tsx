@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "@/components/custom/Button";
 
-const AddComment = () => {
+interface IAddComment {
+  onAddComment: (newCommentValue: string) => void;
+}
+
+const AddComment = ({onAddComment}: IAddComment) => {
   const [comment, selectedComment] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const maxCharacterCount = 250;
@@ -29,15 +33,17 @@ const AddComment = () => {
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";
-      textAreaRef.current.style.height = textAreaRef.current?.scrollHeight + "px";
+      textAreaRef.current.style.height =
+        textAreaRef.current?.scrollHeight + "px";
     }
   }, [comment]);
+
 
   return (
     <div className="w-full min-h-[246px] bg-white rounded-[10px] shadow-sm flex flex-col gap-7 p-8">
       <h3 className="text-hm text-blue-dark">Add Comment</h3>
       <textarea
-        name="comment"
+        id="comment"
         value={comment}
         onChange={handleCommentChange}
         maxLength={maxCharacterCount}
@@ -51,9 +57,10 @@ const AddComment = () => {
           className="text-b2 text-gray-text font-normal"
         >{`${maxCharacterCount} Characters left`}</p>
         <Button
+          type="submit"
           btnColor="purple-light"
-          onClick={() => console.log("Post Comment Clicked")}
-        //   disabled={comment.length > maxCharacterCount}
+          onClick={() => onAddComment(comment)}
+          disabled={comment.length===0}
         >
           Post Comment
         </Button>

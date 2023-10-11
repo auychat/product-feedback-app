@@ -1,23 +1,34 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@/components/custom/Button";
 import { useRouter, useParams } from "next/navigation";
 import SuggestionItem from "@/components/content/SuggestionItem";
 import { FeedbackContext } from "@/context/FeedbackContext";
 import CommentDetail from "@/components/content/CommentDetail";
 import AddComment from "@/components/content/AddComment";
+import { IAddNewComment } from "@/context/FeedbackInterface";
 
 const FeedbackDetail = () => {
   const router = useRouter();
   const params = useParams();
 
-  const { suggestProduct } = useContext(FeedbackContext);
+  const { suggestProduct, addNewComment } = useContext(FeedbackContext);
+  const [newCommentValue, setNewCommentValue] = useState("");
+
   const selectedItem = params?.id
     ? suggestProduct.filter((product) => product.id === +params.id)
     : [];
 
   const selectedComment = selectedItem[0]?.comments;
+
+
+  // Function to add new comment
+  const handleAddComment = (newCommentValue: string) => {
+    setNewCommentValue(newCommentValue);
+    const feedbackId = selectedItem[0]?.id;
+    addNewComment(feedbackId, newCommentValue);
+  };
 
   return (
     <div className="bg-gray-background">
@@ -46,7 +57,8 @@ const FeedbackDetail = () => {
         <CommentDetail commentItems={selectedComment} />
 
         {/* Add Comment */}
-        <AddComment />
+
+        <AddComment onAddComment={handleAddComment} />
       </div>
     </div>
   );

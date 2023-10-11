@@ -5,9 +5,11 @@ import { dummyData } from "@/pages/api/dummyData";
 import { IAddNewFeedback, IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
 import { addNewFeedback } from "./utility_functions/addNewFeedback";
 import { updateUpvote } from "./utility_functions/updateUpvote";
+import { addNewComment } from "./utility_functions/addNewComment";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
+  rawData: {currentUser: {image: "", name: "", username: ""}, productRequests: []},
   allFeedback: [],
   suggestProduct: [],
   nonSuggestProduct: [],
@@ -15,6 +17,7 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
   setSortingCriteria: () => {},
   sortSuggestProduct: [],
   addNewFeedback : () => {},
+  addNewComment: () => {},
   updateUpvote: () => {},
 });
 
@@ -22,6 +25,7 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
 export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const rawData = dummyData;
   const initailFeedback = dummyData.productRequests;
   const [allFeedback, setAllFeedback] = useState<IProductRequests[]>(initailFeedback );
   const productRequests = allFeedback;
@@ -44,6 +48,12 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   // Function to update upvote
   const handleUpdateUpvote = (feedbackId: number) => {
     updateUpvote(feedbackId, allFeedback, setAllFeedback);
+  }
+
+  // Function to add new comment
+  // console.log("rawData",rawData);
+  const handleAddNewComment = (feedbackId:number, newComment: string) => {
+    addNewComment(feedbackId, newComment,rawData, allFeedback, setAllFeedback);
   }
 
   // Function to calculate the total comment count for a product (including replies)
@@ -78,6 +88,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [sortingCriteria, suggestProduct]);
 
   const contextValue: IFeedbackContextValue = {
+    rawData,
     allFeedback,
     suggestProduct,
     nonSuggestProduct,
@@ -85,6 +96,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     setSortingCriteria,
     sortSuggestProduct,
     addNewFeedback: handleAddnewFeedback,
+    addNewComment: handleAddNewComment,
     updateUpvote: handleUpdateUpvote,
   };
 

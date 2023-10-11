@@ -23,7 +23,7 @@ const NewFeedback = () => {
 
   const onSubmit: SubmitHandler<IAddNewFeedback> = (data) => {
     data.category = selectedCategory;
-    console.log(data);
+    // console.log(data);
     addNewFeedback(data);
     router.push("/");
   };
