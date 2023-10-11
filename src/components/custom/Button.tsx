@@ -3,13 +3,20 @@
 import React from "react";
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   btnColor?: string | undefined;
+  type?: "button" | "submit" | "reset" | undefined;
   children: React.ReactNode;
 }
 
-const Button = ({ onClick, className, btnColor, children }: ButtonProps) => {
+const Button = ({
+  onClick,
+  className,
+  btnColor,
+  type,
+  children,
+}: ButtonProps) => {
   const btnClasses: { [key: string]: string } = {
     "purple-light":
       "bg-purple-light hover:bg-[#C75AF6] text-[#F2F4FE] active:bg-purple-light transition-all duration-150 ease-in-out",
@@ -29,7 +36,7 @@ const Button = ({ onClick, className, btnColor, children }: ButtonProps) => {
 
   return (
     <button
-      type="button"
+      type={type || "button"}
       className={`text-hs rounded-[10px] w-[158px] h-[44px] px-6 py-2 hover:bg-blue-light cursor-pointer ${btnClass} ${className}`}
       onClick={onClick}
     >

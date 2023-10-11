@@ -2,7 +2,8 @@
 
 import React, { useState, useMemo, createContext } from "react";
 import { dummyData } from "@/pages/api/dummyData";
-import { IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
+import { IAddNewFeedback, IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
+import { addNewFeedback } from "./utility_functions/addNewFeedback";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
@@ -12,14 +13,16 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
   sortingCriteria: "Most Upvotes",
   setSortingCriteria: () => {},
   sortSuggestProduct: [],
+  addNewFeedback : () => {},
 });
 
 // Create a provider for the feedback context
 export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const allFeedback = dummyData.productRequests;
-  const productRequests = dummyData.productRequests;
+  const initailFeedback = dummyData.productRequests;
+  const [allFeedback, setAllFeedback] = useState<IProductRequests[]>(initailFeedback );
+  const productRequests = allFeedback;
   const [sortingCriteria, setSortingCriteria] =
     useState<string>("Most Upvotes");
 
@@ -30,6 +33,11 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   const nonSuggestProduct: IProductRequests[] = productRequests.filter(
     (product) => product.status !== "suggestion"
   );
+
+  // Fucntion to Add new feedback
+  const handleAddnewFeedback = (newFeedback: IAddNewFeedback) => {
+    addNewFeedback(newFeedback, allFeedback, setAllFeedback);
+  }
 
   // Function to calculate the total comment count for a product (including replies)
   const toTalCommentCount = (product: IProductRequests): number => {
@@ -69,6 +77,8 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     sortingCriteria,
     setSortingCriteria,
     sortSuggestProduct,
+    addNewFeedback: handleAddnewFeedback
+    ,
   };
 
   return (

@@ -4,9 +4,10 @@ import { FeedbackContext } from "@/context/FeedbackContext";
 interface SelectProps {
   optionType: string;
   defaultSelect: string;
+  onOptionSelect: (selectedOption: string) => void;
 }
 
-const Select = ({ optionType, defaultSelect }: SelectProps) => {
+const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
   let options: string[] = [];
 
   if (optionType === "category") {
@@ -19,14 +20,14 @@ const Select = ({ optionType, defaultSelect }: SelectProps) => {
 
   const [selectedOption, setSelectedOption] = useState(defaultSelect);
   const [isOpen, setIsOpen] = useState(false);
-  const { allFeedback, setSortingCriteria } = useContext(FeedbackContext);
+  // const { allFeedback, setSortingCriteria } = useContext(FeedbackContext);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
 
-    // Update sortingCriteria in context
-    setSortingCriteria(option);
+    // Call the callback function with the selected option
+    onOptionSelect(option);
   };
 
   return (

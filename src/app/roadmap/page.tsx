@@ -27,15 +27,15 @@ const Roadmap = () => {
         {/* Header */}
         <div className="bg-blue-secondary h-[113px] w-full rounded-[10px] flex items-center">
           <div className="flex items-center justify-between w-full">
-            <div className="flex flex-col gap-3 px-8  items-start justify-center">
+            <div className="flex flex-col gap-3 items-start justify-center">
               <Button
                 onClick={() => router.back()}
                 btnColor="goback-dark"
-                className="px-0 py-0 w-auto h-auto"
+                className="px-8 py-2 w-auto h-auto"
               >
                 Go Back
               </Button>
-              <h1 className="text-hxl text-white">Roadmap</h1>
+              <h1 className="text-hxl text-white px-8">Roadmap</h1>
             </div>
 
             {/* Button +Add Feedback */}

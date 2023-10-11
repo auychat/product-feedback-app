@@ -5,6 +5,7 @@ export interface IFeedbackContextValue {
   sortingCriteria: string;
   setSortingCriteria: (criteria: string) => void;
   sortSuggestProduct: IProductRequests[];
+  addNewFeedback : (newFeedback: IAddNewFeedback) => void;
 }
 
 export interface IFeedback {
@@ -45,4 +46,10 @@ export interface IReply {
   content: string;
   replyingTo: string;
   user: IUser;
+}
+
+export interface IAddNewFeedback {
+  title: string;
+  category: string;
+  description: string;
 }
