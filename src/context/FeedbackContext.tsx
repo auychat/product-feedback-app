@@ -6,6 +6,7 @@ import { IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
+  allFeedback: [],
   suggestProduct: [],
   nonSuggestProduct: [],
   sortingCriteria: "Most Upvotes",
@@ -17,6 +18,7 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
 export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const allFeedback = dummyData.productRequests;
   const productRequests = dummyData.productRequests;
   const [sortingCriteria, setSortingCriteria] =
     useState<string>("Most Upvotes");
@@ -61,6 +63,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [sortingCriteria, suggestProduct]);
 
   const contextValue: IFeedbackContextValue = {
+    allFeedback,
     suggestProduct,
     nonSuggestProduct,
     sortingCriteria,

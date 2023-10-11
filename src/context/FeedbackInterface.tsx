@@ -1,4 +1,5 @@
 export interface IFeedbackContextValue {
+  allFeedback: IProductRequests[];
   suggestProduct: IProductRequests[];
   nonSuggestProduct: IProductRequests[];
   sortingCriteria: string;

@@ -2,8 +2,10 @@ import React,{useContext} from "react";
 import Select from "../custom/Select";
 import Button from "../custom/Button";
 import { FeedbackContext } from "@/context/FeedbackContext";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
 
   const { suggestProduct } = useContext(FeedbackContext);
   const suggestionCount = suggestProduct.length;
@@ -30,7 +32,7 @@ const Header = () => {
 
         {/* Button +Add Feedback */}
         <div className="pr-4">
-          <Button onClick={() => console.log("Click")} btnColor="purple-light">
+          <Button onClick={() => router.push("/new-feedback")} btnColor="purple-light">
             + Add Feedback
           </Button>
         </div>
