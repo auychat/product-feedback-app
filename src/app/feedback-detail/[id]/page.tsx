@@ -13,15 +13,19 @@ const FeedbackDetail = () => {
   const router = useRouter();
   const params = useParams();
 
-  const { suggestProduct, addNewComment } = useContext(FeedbackContext);
+  const { allFeedback, suggestProduct, addNewComment } =
+    useContext(FeedbackContext);
   const [newCommentValue, setNewCommentValue] = useState("");
 
+  // const selectedItem = params?.id
+  //   ? suggestProduct.filter((product) => product.id === +params.id)
+  //   : [];
+
   const selectedItem = params?.id
-    ? suggestProduct.filter((product) => product.id === +params.id)
+    ? allFeedback.filter((product) => product.id === +params.id)
     : [];
 
   const selectedComment = selectedItem[0]?.comments;
-
 
   // Function to add new comment
   const handleAddComment = (newCommentValue: string) => {
@@ -43,7 +47,7 @@ const FeedbackDetail = () => {
             Go Back
           </Button>
           <Button
-            onClick={() => router.push("/edit-feedback")}
+            onClick={() => router.push(`/edit-feedback/${params?.id}`)}
             btnColor="blue-primary"
           >
             Edit Feedback

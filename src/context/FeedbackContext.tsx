@@ -2,10 +2,11 @@
 
 import React, { useState, useMemo, createContext } from "react";
 import { dummyData } from "@/pages/api/dummyData";
-import { IAddNewFeedback, IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
+import { IAddNewFeedback, IEditFeedback, IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
 import { addNewFeedback } from "./utility_functions/addNewFeedback";
 import { updateUpvote } from "./utility_functions/updateUpvote";
 import { addNewComment } from "./utility_functions/addNewComment";
+import { editFeedback } from "./utility_functions/editFeedback";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
@@ -17,6 +18,7 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
   setSortingCriteria: () => {},
   sortSuggestProduct: [],
   addNewFeedback : () => {},
+  editFeedback: () => {},
   addNewComment: () => {},
   updateUpvote: () => {},
 });
@@ -45,13 +47,17 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     addNewFeedback(newFeedback, allFeedback, setAllFeedback);
   }
 
+  // Function to Edit Feedback
+  const handleEditFeedback = (editedFeedback: IEditFeedback) => {
+    editFeedback(editedFeedback, allFeedback, setAllFeedback);
+  }
+
   // Function to update upvote
   const handleUpdateUpvote = (feedbackId: number) => {
     updateUpvote(feedbackId, allFeedback, setAllFeedback);
   }
 
   // Function to add new comment
-  // console.log("rawData",rawData);
   const handleAddNewComment = (feedbackId:number, newComment: string) => {
     addNewComment(feedbackId, newComment,rawData, allFeedback, setAllFeedback);
   }
@@ -96,6 +102,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     setSortingCriteria,
     sortSuggestProduct,
     addNewFeedback: handleAddnewFeedback,
+    editFeedback: handleEditFeedback,
     addNewComment: handleAddNewComment,
     updateUpvote: handleUpdateUpvote,
   };

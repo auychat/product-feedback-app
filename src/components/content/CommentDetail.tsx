@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { IComments, IReply } from "@/context/FeedbackInterface";
 import Image from "next/image";
+import Button from "../custom/Button";
 
 interface commentDetailProps {
   commentItems?: IComments[];
 }
 
 const CommentDetail = ({ commentItems }: commentDetailProps) => {
-  const mainCommentCount = commentItems?.length?? 0;
-  const replyCommentCount = commentItems?.map((c) => c.replies?.length?? 0);
-  const totalCommentCount = mainCommentCount  + (replyCommentCount?.reduce((a, b) => a + b, 0)?? 0);
+  const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const [replyToCommentId, setReplyToCommentId] = useState<number | null>(null);
+  const mainCommentCount = commentItems?.length ?? 0;
+  const replyCommentCount = commentItems?.map((c) => c.replies?.length ?? 0);
+  const totalCommentCount =
+    mainCommentCount + (replyCommentCount?.reduce((a, b) => a + b, 0) ?? 0);
+
+  // Function to handle reply comment open and close
+  const handleReplyComment = (commentId: number) => {
+    setReplyToCommentId(commentId);
+    setIsReplyOpen(!isReplyOpen);
+  };
 
   return (
     <div className="w-full min-h-[150px] bg-white rounded-[10px] shadow-sm flex flex-col gap-8 p-8">
-      <h3 className="text-hm text-blue-dark">
-        {totalCommentCount} Comments
-      </h3>
+      <h3 className="text-hm text-blue-dark">{totalCommentCount} Comments</h3>
 
       {commentItems?.map((comment, index) => (
         <div key={comment.id} className="flex flex-col gap-4 ">
@@ -39,6 +47,7 @@ const CommentDetail = ({ commentItems }: commentDetailProps) => {
             </div>
             <button
               type="button"
+              onClick={() => {handleReplyComment(comment.id), console.log("reply to", comment.user.username)}}
               className="text-b3 font-semibold text-blue-primary"
             >
               Reply
@@ -49,50 +58,65 @@ const CommentDetail = ({ commentItems }: commentDetailProps) => {
               {comment.content}
             </p>
 
+            {/* Add new Reply Comment */}
+            {replyToCommentId === comment.id && isReplyOpen && (
+              <div className="flex items-center justify-between gap-4 pt-6">
+                <textarea
+                  id="reply-comment"
+                  // value={reply-comment}
+                  // onChange={handleCommentChange}
+                  className="bg-gray-background w-[461px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
+                  // ref={textAreaRef}
+                />
+                <Button className="w-[117px]" btnColor="purple-light">Post Reply</Button>
+              </div>
+            )}
+
             {/* Reply Comment */}
             {Array.isArray(comment.replies) && comment.replies?.length > 0 && (
               <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)]" />
             )}
             <div className="translate-x-[-28px] w-[621px]">
-            {comment.replies?.map((reply, index) => (
-              <div key={index} className="flex flex-col gap-4 w-full pt-8">
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-8">
-                    <div className="relative w-10 h-10 rounded-full">
-                      <Image
-                        src={reply.user.image}
-                        alt={reply.user.name}
-                        fill={true}
-                        sizes="100%"
-                        className="w-auto h-auto rounded-full"
-                      />
+              {comment.replies?.map((reply, index) => (
+                <div key={index} className="flex flex-col gap-4 w-full pt-8">
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-8">
+                      <div className="relative w-10 h-10 rounded-full">
+                        <Image
+                          src={reply.user.image}
+                          alt={reply.user.name}
+                          fill={true}
+                          sizes="100%"
+                          className="w-auto h-auto rounded-full"
+                        />
+                      </div>
+                      <div>
+                        <h5 className="text-hs text-blue-dark">
+                          {reply.user.name}
+                        </h5>
+                        <h5 className="text-hs text-gray-text font-normal">
+                          {reply.user.username}
+                        </h5>
+                      </div>
                     </div>
-                    <div>
-                      <h5 className="text-hs text-blue-dark">
-                        {reply.user.name}
-                      </h5>
-                      <h5 className="text-hs text-gray-text font-normal">
-                        {reply.user.username}
-                      </h5>
-                    </div>
+                    <button
+                      type="button"
+                      className="text-b3 font-semibold text-blue-primary"
+                      onClick={() => console.log("reply to", reply.user.username)}
+                    >
+                      Reply
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    className="text-b3 font-semibold text-blue-primary"
-                  >
-                    Reply
-                  </button>
+                  <div className="w-full pl-[72px] flex">
+                    <p className="text-b2 text-gray-text font-normal">
+                      <span className="text-b2 font-bold text-purple-light">
+                        @{reply.replyingTo}{" "}
+                      </span>
+                      {reply.content}
+                    </p>
+                  </div>
                 </div>
-                <div className="w-full pl-[72px] flex">
-                  <p className="text-b2 text-gray-text font-normal">
-                    <span className="text-b2 font-bold text-purple-light">
-                      @{reply.replyingTo}{" "}
-                    </span>
-                    {reply.content}
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
             </div>
           </div>
 
