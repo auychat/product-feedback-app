@@ -19,6 +19,7 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
   sortSuggestProduct: [],
   addNewFeedback : () => {},
   editFeedback: () => {},
+  deleteFeedback: () => {},
   addNewComment: () => {},
   updateUpvote: () => {},
 });
@@ -50,6 +51,14 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   // Function to Edit Feedback
   const handleEditFeedback = (editedFeedback: IEditFeedback) => {
     editFeedback(editedFeedback, allFeedback, setAllFeedback);
+  }
+
+  // Function to Delete Feedback
+  const deleteFeedback = (feedbackId: number) => {
+    const newFeedback = allFeedback.filter(
+      (feedback) => feedback.id !== feedbackId
+    );
+    setAllFeedback(newFeedback);
   }
 
   // Function to update upvote
@@ -103,6 +112,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     sortSuggestProduct,
     addNewFeedback: handleAddnewFeedback,
     editFeedback: handleEditFeedback,
+    deleteFeedback,
     addNewComment: handleAddNewComment,
     updateUpvote: handleUpdateUpvote,
   };

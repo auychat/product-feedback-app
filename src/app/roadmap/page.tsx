@@ -7,6 +7,7 @@ import CategoryTag from "@/components/custom/CategoryTag";
 import Upvote from "@/components/custom/Upvote";
 import Comment from "@/components/custom/Comment";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Roadmap = () => {
   const router = useRouter();
@@ -81,10 +82,10 @@ const Roadmap = () => {
                   </div>
 
                   {/* Title Description */}
-                  <div>
+                  <Link href={`/feedback-detail/${item.id}`}>
                     <h3 className="text-hm text-blue-dark">{item.title}</h3>
                     <p className="text-b1 text-gray-text">{item.description}</p>
-                  </div>
+                  </Link>
 
                   {/* Category */}
                   <div>
@@ -134,10 +135,10 @@ const Roadmap = () => {
                   </div>
 
                   {/* Title Description */}
-                  <div>
+                  <Link href={`/feedback-detail/${item.id}`}>
                     <h3 className="text-hm text-blue-dark">{item.title}</h3>
                     <p className="text-b1 text-gray-text">{item.description}</p>
-                  </div>
+                  </Link>
 
                   {/* Category */}
                   <div>
@@ -185,10 +186,10 @@ const Roadmap = () => {
                   </div>
 
                   {/* Title Description */}
-                  <div>
+                  <Link href={`/feedback-detail/${item.id}`}>
                     <h3 className="text-hm text-blue-dark">{item.title}</h3>
                     <p className="text-b1 text-gray-text">{item.description}</p>
-                  </div>
+                  </Link>
 
                   {/* Category */}
                   <div>

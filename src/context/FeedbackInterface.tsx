@@ -8,6 +8,7 @@ export interface IFeedbackContextValue {
   sortSuggestProduct: IProductRequests[];
   addNewFeedback : (newFeedback: IAddNewFeedback) => void;
   editFeedback: (editFeedback: IEditFeedback) => void;
+  deleteFeedback: (feedbackId: number) => void;
   addNewComment: (feedbackId: number, newComment: string) => void;
   updateUpvote: (feedbackId: number) => void;
 }

@@ -15,7 +15,8 @@ const EditFeedback = () => {
   const [selectedCategory, setSelectedCategory] = useState("Feature");
   const [selectedStatus, setSelectedStatus] = useState("Feature");
 
-  const { allFeedback, editFeedback } = useContext(FeedbackContext);
+  const { allFeedback, editFeedback, deleteFeedback } =
+    useContext(FeedbackContext);
   // React Hook Form
   const {
     control,
@@ -30,14 +31,18 @@ const EditFeedback = () => {
     ? allFeedback.filter((feedback) => feedback.id === +params.id)
     : [];
 
-  const onSubmit = (data: IEditFeedback) => {
-    data.id = selectedFeedback[0]?.id;
-    data.category = selectedCategory;
-    data.status = selectedStatus;
-    // console.log(data);
-    editFeedback(data);
-    router.push(`/feedback-detail/${params?.id}`);
-    // router.push(`/`);
+  const onSubmit = async (data: IEditFeedback) => {
+    try {
+      data.id = selectedFeedback[0]?.id;
+      data.category = selectedCategory;
+      data.status = selectedStatus.toLowerCase();
+      // console.log(data);
+      editFeedback(data);
+      router.push(`/feedback-detail/${params?.id}`);
+      // router.push("/")
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCategorySelect = (selectedOption: string) => {
@@ -46,6 +51,15 @@ const EditFeedback = () => {
 
   const handleStatusSelect = (selectedOption: string) => {
     setSelectedStatus(selectedOption);
+  };
+
+  const handleDeleteFeedback = async () => {
+    try {
+      await deleteFeedback(selectedFeedback[0]?.id);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // Return 404 if the feedback is not found
@@ -160,7 +174,9 @@ const EditFeedback = () => {
             {/* Button */}
             <div className="flex items-center justify-between w-full">
               <Button
-                onClick={() => console.log("Delete Feedback")}
+                onClick={() => {
+                  handleDeleteFeedback();
+                }}
                 btnColor="danger"
                 className="w-[93px]"
               >

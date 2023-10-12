@@ -17,10 +17,6 @@ const FeedbackDetail = () => {
     useContext(FeedbackContext);
   const [newCommentValue, setNewCommentValue] = useState("");
 
-  // const selectedItem = params?.id
-  //   ? suggestProduct.filter((product) => product.id === +params.id)
-  //   : [];
-
   const selectedItem = params?.id
     ? allFeedback.filter((product) => product.id === +params.id)
     : [];
