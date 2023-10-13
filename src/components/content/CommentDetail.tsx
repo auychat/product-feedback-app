@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import {
-  IComments,
-  IProductRequests,
-  IReply,
-  IUser,
-} from "@/context/FeedbackInterface";
+import { IComments, IUser } from "@/context/FeedbackInterface";
 import Image from "next/image";
 import Button from "../custom/Button";
 import { FeedbackContext } from "@/context/FeedbackContext";
@@ -14,15 +9,24 @@ interface commentDetailProps {
   feedbackItemsId?: number;
 }
 
-const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) => {
+const CommentDetail = ({
+  commentItems,
+  feedbackItemsId,
+}: commentDetailProps) => {
   const [isReplyMajorOpen, setIsReplyMajorOpen] = useState(false);
   const [isReplyMinorOpen, setIsReplyMinorOpen] = useState(false);
   const [replyMajorComment, setReplyMajorComment] = useState("");
   const [replyMinorComment, setReplyMinorComment] = useState("");
-  const [majorReplyToCommentId, setMajorReplyToCommentId] = useState<number | null>(null);
+  const [majorReplyToCommentId, setMajorReplyToCommentId] = useState<
+    number | null
+  >(null);
+  const [minorReplyToCommentId, setMinorReplyToCommentId] = useState<
+    number | null
+  >(null);
   const [minorReplyToUser, setMinorReplyToUser] = useState<string>("");
 
-  const {addReplyMajorComment} = useContext(FeedbackContext);
+  const { addReplyMajorComment, addReplyMinorComment } =
+    useContext(FeedbackContext);
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const maxCharacterCount = 250;
@@ -39,7 +43,8 @@ const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) =>
   };
 
   // Function to handle reply minor comment open and close
-  const handleReplyMinorCommentOpen = (user: IUser) => {
+  const handleReplyMinorCommentOpen = (user: IUser, commentId: number) => {
+    setMinorReplyToCommentId(commentId);
     setMinorReplyToUser(user.username);
     setIsReplyMinorOpen(!isReplyMinorOpen);
   };
@@ -67,7 +72,7 @@ const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) =>
   // Function to handle submit Major comment
   const handleAddMajorComment = (user: IUser) => {
     if (replyMajorComment.length > 0) {
-      addReplyMajorComment(feedbackItemsId!, user.username, replyMajorComment)
+      addReplyMajorComment(feedbackItemsId!, user.username, replyMajorComment);
       setReplyMajorComment("");
       setIsReplyMajorOpen(false);
     }
@@ -76,6 +81,12 @@ const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) =>
   // Function to handle submit Minor comment
   const handleAddMinorComment = () => {
     if (replyMinorComment.length > 0) {
+      addReplyMinorComment(
+        feedbackItemsId!,
+        minorReplyToCommentId!,
+        minorReplyToUser,
+        replyMinorComment
+      );
       setReplyMinorComment("");
       setIsReplyMinorOpen(false);
     }
@@ -154,7 +165,7 @@ const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) =>
 
             {/*Start Reply Minor Comment */}
             {Array.isArray(comment.replies) && comment.replies?.length > 0 && (
-              <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)]" />
+              <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-60px)]" />
             )}
             <div className="translate-x-[-28px] w-[621px]">
               {comment.replies?.map((reply, index) => (
@@ -182,7 +193,9 @@ const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) =>
                     <button
                       type="button"
                       className="text-b3 font-semibold text-blue-primary"
-                      onClick={() => handleReplyMinorCommentOpen(reply.user)}
+                      onClick={() =>
+                        handleReplyMinorCommentOpen(reply.user, comment.id)
+                      }
                     >
                       Reply
                     </button>
@@ -195,7 +208,8 @@ const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) =>
                       {reply.content}
                     </p>
                     {/* Add new Reply Minor Comment */}
-                    {isReplyMinorOpen &&
+                    {minorReplyToCommentId === comment.id &&
+                      isReplyMinorOpen &&
                       comment.replies &&
                       index === comment.replies?.length - 1 && (
                         <div className="flex items-center justify-between gap-4 pt-6">

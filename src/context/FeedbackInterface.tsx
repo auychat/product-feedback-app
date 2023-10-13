@@ -15,6 +15,12 @@ export interface IFeedbackContextValue {
     replyToUser: string,
     newReplyMajorComment: string,
   ) => void;
+  addReplyMinorComment: (
+    feedbackId: number,
+    majorCommentId: number,
+    replyToUser: string,
+    newReplyMinorComment: string,
+  ) => void;
   updateUpvote: (feedbackId: number) => void;
 }
 

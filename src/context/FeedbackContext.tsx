@@ -13,6 +13,7 @@ import { updateUpvote } from "./utility_functions/updateUpvote";
 import { addNewComment } from "./utility_functions/addNewComment";
 import { editFeedback } from "./utility_functions/editFeedback";
 import { addReplyMajorComment } from "./utility_functions/addReplyMajorComment";
+import { addReplyMinorComment } from "./utility_functions/addReplyMinorComment";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
@@ -31,6 +32,7 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
   deleteFeedback: () => {},
   addNewComment: () => {},
   addReplyMajorComment: () => {},
+  addReplyMinorComment: () => {},
   updateUpvote: () => {},
 });
 
@@ -98,6 +100,24 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
+    // Function to add new reply major comment
+    const handleAddReplyMinorComment = (
+      feedbackId: number,
+      majorCommentId: number,
+      replyToUser: string,
+      newReplyMinorComment: string
+    ) => {
+      addReplyMinorComment(
+        feedbackId,
+        majorCommentId,
+        replyToUser,
+        newReplyMinorComment,
+        rawData,
+        allFeedback,
+        setAllFeedback
+      );
+    };
+
   // Function to calculate the total comment count for a product (including replies)
   const toTalCommentCount = (product: IProductRequests): number => {
     let totalComment = product.comments?.length ?? 0;
@@ -142,6 +162,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     deleteFeedback,
     addNewComment: handleAddNewComment,
     addReplyMajorComment: handleAddReplyMajorComment,
+    addReplyMinorComment: handleAddReplyMinorComment,
     updateUpvote: handleUpdateUpvote,
   };
 
