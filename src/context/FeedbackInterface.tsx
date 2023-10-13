@@ -5,6 +5,8 @@ export interface IFeedbackContextValue {
   nonSuggestProduct: IProductRequests[];
   sortingCriteria: string;
   setSortingCriteria: (criteria: string) => void;
+  sortByCategoryTag: string[];
+  handleSelectTag: (tag: string) => void;
   sortSuggestProduct: IProductRequests[];
   addNewFeedback : (newFeedback: IAddNewFeedback) => void;
   editFeedback: (editFeedback: IEditFeedback) => void;

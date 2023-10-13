@@ -89,10 +89,14 @@ const Roadmap = () => {
 
                   {/* Category */}
                   <div>
-                    <CategoryTag>
-                      {item.category.charAt(0).toUpperCase() +
-                        item.category.slice(1)}
-                    </CategoryTag>
+                    <CategoryTag
+                      tag={
+                        item.category.charAt(0).toUpperCase() +
+                        item.category.slice(1)
+                      }
+                      disabled={true}
+                      preventActive={true}
+                    />
                   </div>
 
                   {/* Upvote and Comment */}
@@ -150,10 +154,14 @@ const Roadmap = () => {
 
                   {/* Category */}
                   <div>
-                    <CategoryTag>
-                      {item.category.charAt(0).toUpperCase() +
-                        item.category.slice(1)}
-                    </CategoryTag>
+                    <CategoryTag
+                      tag={
+                        item.category.charAt(0).toUpperCase() +
+                        item.category.slice(1)
+                      }
+                      disabled={true}
+                      preventActive={true}
+                    />
                   </div>
 
                   {/* Upvote and Comment */}
@@ -209,10 +217,14 @@ const Roadmap = () => {
 
                   {/* Category */}
                   <div>
-                    <CategoryTag>
-                      {item.category.charAt(0).toUpperCase() +
-                        item.category.slice(1)}
-                    </CategoryTag>
+                    <CategoryTag
+                      tag={
+                        item.category.charAt(0).toUpperCase() +
+                        item.category.slice(1)
+                      }
+                      disabled={true}
+                      preventActive={true}
+                    />
                   </div>
 
                   {/* Upvote and Comment */}

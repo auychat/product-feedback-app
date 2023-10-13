@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { FeedbackContext } from "@/context/FeedbackContext";
 
 interface SelectProps {
   optionType: string;
@@ -7,7 +6,7 @@ interface SelectProps {
   onOptionSelect: (selectedOption: string) => void;
 }
 
-const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
+const SelectFeature = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
   let options: string[] = [];
 
   if (optionType === "category") {
@@ -20,7 +19,6 @@ const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
 
   const [selectedOption, setSelectedOption] = useState(defaultSelect);
   const [isOpen, setIsOpen] = useState(false);
-  // const { allFeedback, setSortingCriteria } = useContext(FeedbackContext);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
@@ -29,6 +27,9 @@ const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
     // Call the callback function with the selected option
     onOptionSelect(option);
   };
+
+  // Make first letter of selected option uppercase
+  const selectedOptionCapitalized = selectedOption.charAt(0).toUpperCase() + selectedOption.slice(1);
 
   return (
     <div
@@ -43,7 +44,7 @@ const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
               : "text-blue-dark text-b2 font-normal"
           }`}
         >
-          {selectedOption}
+          {selectedOptionCapitalized}
         </p>
 
         <div className="flex items-center">
@@ -90,7 +91,7 @@ const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
                   <p className="text-b1 text-gray-text group-hover:text-purple-light">
                     {option}
                   </p>
-                  {selectedOption === option && (
+                  {selectedOption.toLowerCase() === option.toLowerCase() && (
                     <div className="">
                       {/* Icon Check */}
                       <svg
@@ -118,4 +119,4 @@ const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
   );
 };
 
-export default Select;
+export default SelectFeature;

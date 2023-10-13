@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, createContext } from "react";
+import React, { useState, useMemo, useEffect, createContext } from "react";
 import { dummyData } from "@/pages/api/dummyData";
 import {
   IAddNewFeedback,
@@ -14,6 +14,8 @@ import { addNewComment } from "./utility_functions/addNewComment";
 import { editFeedback } from "./utility_functions/editFeedback";
 import { addReplyMajorComment } from "./utility_functions/addReplyMajorComment";
 import { addReplyMinorComment } from "./utility_functions/addReplyMinorComment";
+import { sortProduct } from "./utility_functions/sortProduct";
+import { set } from "react-hook-form";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
@@ -26,6 +28,8 @@ export const FeedbackContext = createContext<IFeedbackContextValue>({
   nonSuggestProduct: [],
   sortingCriteria: "Most Upvotes",
   setSortingCriteria: () => {},
+  sortByCategoryTag: ["All"],
+  handleSelectTag: () => {},
   sortSuggestProduct: [],
   addNewFeedback: () => {},
   editFeedback: () => {},
@@ -42,19 +46,27 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const rawData = dummyData;
   const initailFeedback = dummyData.productRequests;
-  const [allFeedback, setAllFeedback] =
-    useState<IProductRequests[]>(initailFeedback);
+  const [allFeedback, setAllFeedback] = useState<IProductRequests[]>(initailFeedback);
   const productRequests = allFeedback;
-  const [sortingCriteria, setSortingCriteria] =
-    useState<string>("Most Upvotes");
+  const [suggestProduct, setSuggestProduct] = useState<IProductRequests[]>([]);
+  const [nonSuggestProduct, setNonSuggestProduct] = useState<IProductRequests[]>([]);
+  const [sortingCriteria, setSortingCriteria] = useState<string>("Most Upvotes");
+  const [sortByCategoryTag, setSortByCategoryTag] = useState<string[]>(["All"]);
 
-  const suggestProduct: IProductRequests[] = productRequests.filter(
-    (product) => product.status === "suggestion"
-  );
+  useEffect(() => {
+    const filteredSuggestProduct: IProductRequests[] = productRequests.filter(
+      (product) => product.status.toLowerCase() === "suggestion"
+    );
 
-  const nonSuggestProduct: IProductRequests[] = productRequests.filter(
-    (product) => product.status !== "suggestion"
-  );
+    const filteredNonSuggestProduct: IProductRequests[] = productRequests.filter(
+      (product) => product.status.toLowerCase() !== "suggestion"
+    );
+
+    setSuggestProduct(filteredSuggestProduct);
+    setNonSuggestProduct(filteredNonSuggestProduct);
+
+  }, [allFeedback, productRequests]);
+
 
   // Fucntion to Add new feedback
   const handleAddnewFeedback = (newFeedback: IAddNewFeedback) => {
@@ -100,7 +112,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
-    // Function to add new reply major comment
+    // Function to add new reply minor comment
     const handleAddReplyMinorComment = (
       feedbackId: number,
       majorCommentId: number,
@@ -129,25 +141,20 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     return totalComment;
   };
 
-  // Function to sort suggestProduct based on criteria
-  const sortSuggestProduct = useMemo(() => {
-    let sortedProductRequest = [...suggestProduct];
-
-    if (sortingCriteria === "Most Upvotes") {
-      sortedProductRequest.sort((a, b) => b.upvotes - a.upvotes);
-    } else if (sortingCriteria === "Least Upvotes") {
-      sortedProductRequest.sort((a, b) => a.upvotes - b.upvotes);
-    } else if (sortingCriteria === "Most Comments") {
-      sortedProductRequest.sort(
-        (a, b) => toTalCommentCount(b) - toTalCommentCount(a)
-      );
-    } else if (sortingCriteria === "Least Comments") {
-      sortedProductRequest.sort(
-        (a, b) => toTalCommentCount(a) - toTalCommentCount(b)
-      );
+  // Function to handle select tag
+  const handleSelectTag = (tag: string) => {
+    if (sortByCategoryTag.includes(tag)) {
+      const newSelectedTag = sortByCategoryTag.filter((item) => item !== tag);
+      setSortByCategoryTag(newSelectedTag);
+    } else {
+      setSortByCategoryTag([...sortByCategoryTag, tag]);
     }
-    return sortedProductRequest;
-  }, [sortingCriteria, suggestProduct]);
+  };
+
+  // Function to sort suggestProduct based on criteria and category tag
+  const sortSuggestProduct = useMemo(() => {
+    return sortProduct(suggestProduct, sortingCriteria, sortByCategoryTag, toTalCommentCount);
+  }, [sortingCriteria, suggestProduct, sortByCategoryTag]);
 
   const contextValue: IFeedbackContextValue = {
     rawData,
@@ -156,6 +163,8 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     nonSuggestProduct,
     sortingCriteria,
     setSortingCriteria,
+    sortByCategoryTag,
+    handleSelectTag,
     sortSuggestProduct,
     addNewFeedback: handleAddnewFeedback,
     editFeedback: handleEditFeedback,

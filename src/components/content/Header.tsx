@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const Header = () => {
   const router = useRouter();
 
-  const { suggestProduct } = useContext(FeedbackContext);
+  const { suggestProduct, sortingCriteria } = useContext(FeedbackContext);
   const suggestionCount = suggestProduct.length;
   return (
     <div className="bg-blue-secondary h-[72px] w-full rounded-[10px]">
@@ -27,7 +27,7 @@ const Header = () => {
           </div>
 
           {/* Sort by */}
-          <Select defaultOption="Most Upvotes" />
+          <Select defaultOption={sortingCriteria} />
         </div>
 
         {/* Button +Add Feedback */}

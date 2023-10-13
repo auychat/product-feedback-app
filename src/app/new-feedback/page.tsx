@@ -22,7 +22,7 @@ const NewFeedback = () => {
   } = useForm<IAddNewFeedback>();
 
   const onSubmit: SubmitHandler<IAddNewFeedback> = (data) => {
-    data.category = selectedCategory;
+    data.category = selectedCategory.toLowerCase();
     // console.log(data);
     addNewFeedback(data);
     router.push("/");

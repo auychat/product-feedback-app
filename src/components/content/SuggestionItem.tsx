@@ -30,7 +30,10 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
           <div className="py-7 px-8 flex gap-6 w-full justify-between">
             <div className="flex gap-10">
               {/* Upvote number */}
-              <Upvote initialUpvotes={product.upvotes} feedbackId={product.id} />
+              <Upvote
+                initialUpvotes={product.upvotes}
+                feedbackId={product.id}
+              />
 
               {/* Title description */}
               <div className="flex flex-col gap-3">
@@ -43,14 +46,23 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
                   </p>
                 </Link>
                 <div>
-                  <CategoryTag>{product.category}</CategoryTag>
+                  <CategoryTag
+                    tag={
+                      product.category.charAt(0).toUpperCase() +
+                      product.category.slice(1)
+                    }
+                    disabled={true}
+                    preventActive={true}
+                  />
                 </div>
               </div>
             </div>
 
             {/* Comment */}
-            {/* <Comment commentCount={product.comments?.length} /> */}
-            <Link href={`/feedback-detail/${product.id}`} className="flex items-center">
+            <Link
+              href={`/feedback-detail/${product.id}`}
+              className="flex items-center"
+            >
               <Comment commentCount={CommentCount[index]} />
             </Link>
           </div>

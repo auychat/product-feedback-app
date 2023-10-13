@@ -13,12 +13,9 @@ import DeleteModal from "@/components/custom/DeleteModal";
 const EditFeedback = () => {
   const router = useRouter();
   const params = useParams();
-  const [selectedCategory, setSelectedCategory] = useState("Feature");
-  const [selectedStatus, setSelectedStatus] = useState("Feature");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const { allFeedback, editFeedback, deleteFeedback } =
-    useContext(FeedbackContext);
+  const { allFeedback, editFeedback } = useContext(FeedbackContext);
   // React Hook Form
   const {
     control,
@@ -27,18 +24,26 @@ const EditFeedback = () => {
     formState: { errors },
   } = useForm<IEditFeedback>();
 
-  // console.log(watch("title"));
-
   const selectedFeedback = params?.id
     ? allFeedback.filter((feedback) => feedback.id === +params.id)
     : [];
 
+    const initialCategory = selectedFeedback[0]?.category;
+    const initialStatus = selectedFeedback[0]?.status;
+
+    const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+    const [selectedStatus, setSelectedStatus] = useState(initialStatus);
+
+    // console.log("initialCategory", initialCategory)
+    // console.log("initialStatus", initialStatus)
+    // console.log("selectedFeedback", selectedFeedback)
+
   const onSubmit = async (data: IEditFeedback) => {
     try {
       data.id = selectedFeedback[0]?.id;
-      data.category = selectedCategory;
+      data.category = selectedCategory.toLowerCase();
       data.status = selectedStatus.toLowerCase();
-      // console.log(data);
+      // console.log("data from editPage:",data);
       await editFeedback(data);
 
       if (
@@ -50,7 +55,7 @@ const EditFeedback = () => {
       } else {
         router.push("/");
       }
-      // router.push(`/feedback-detail/${params?.id}`);
+
     } catch (error) {
       console.log(error);
     }
@@ -138,7 +143,7 @@ const EditFeedback = () => {
               </div>
               <SelectFeature
                 optionType="category"
-                defaultSelect={selectedFeedback[0]?.category}
+                defaultSelect={initialCategory}
                 onOptionSelect={handleCategorySelect}
               />
             </div>
@@ -153,7 +158,7 @@ const EditFeedback = () => {
               </div>
               <SelectFeature
                 optionType="status"
-                defaultSelect={selectedFeedback[0]?.status}
+                defaultSelect={initialStatus}
                 onOptionSelect={handleStatusSelect}
               />
             </div>
