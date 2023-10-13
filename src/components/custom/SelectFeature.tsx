@@ -15,7 +15,7 @@ const Select = ({ optionType, defaultSelect, onOptionSelect }: SelectProps) => {
   }
 
   if (optionType === "status") {
-    options = ["Planned", "In-Progress", "Live"];
+    options = ["Suggestion","Planned", "In-Progress", "Live"];
   }
 
   const [selectedOption, setSelectedOption] = useState(defaultSelect);

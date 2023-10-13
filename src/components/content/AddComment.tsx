@@ -6,14 +6,14 @@ interface IAddComment {
 }
 
 const AddComment = ({onAddComment}: IAddComment) => {
-  const [comment, selectedComment] = useState("");
+  const [comment, setComment] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const maxCharacterCount = 250;
 
   // Function to upate the comment state and character count
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputText = e.target.value;
-    selectedComment(inputText);
+    setComment(inputText);
 
     // Calculate the remaining character count
     const characterCount = inputText.length;
@@ -38,6 +38,14 @@ const AddComment = ({onAddComment}: IAddComment) => {
     }
   }, [comment]);
 
+  // Function to handle submit comment
+  const handleAddComment = () => {
+    if(comment.length>0){
+      onAddComment(comment);
+      setComment("");
+    }
+  }
+
 
   return (
     <div className="w-full min-h-[246px] bg-white rounded-[10px] shadow-sm flex flex-col gap-7 p-8">
@@ -59,7 +67,7 @@ const AddComment = ({onAddComment}: IAddComment) => {
         <Button
           type="submit"
           btnColor="purple-light"
-          onClick={() => onAddComment(comment)}
+          onClick={() => {handleAddComment()}}
           disabled={comment.length===0}
         >
           Post Comment

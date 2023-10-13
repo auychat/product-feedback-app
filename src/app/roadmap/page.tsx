@@ -97,8 +97,16 @@ const Roadmap = () => {
 
                   {/* Upvote and Comment */}
                   <div className="flex justify-between items-center">
-                    <Upvote initialUpvotes={item.upvotes} feedbackId={item.id} />
-                    <Comment commentCount={item.comments?.length} />
+                    <Upvote
+                      initialUpvotes={item.upvotes}
+                      feedbackId={item.id}
+                    />
+                    <Link
+                      href={`/feedback-detail/${item.id}`}
+                      className="flex items-center"
+                    >
+                      <Comment commentCount={item.comments?.length} />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -150,8 +158,16 @@ const Roadmap = () => {
 
                   {/* Upvote and Comment */}
                   <div className="flex justify-between items-center">
-                    <Upvote initialUpvotes={item.upvotes}  feedbackId={item.id}/>
-                    <Comment commentCount={item.comments?.length} />
+                    <Upvote
+                      initialUpvotes={item.upvotes}
+                      feedbackId={item.id}
+                    />
+                    <Link
+                      href={`/feedback-detail/${item.id}`}
+                      className="flex items-center"
+                    >
+                      <Comment commentCount={item.comments?.length} />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -201,8 +217,16 @@ const Roadmap = () => {
 
                   {/* Upvote and Comment */}
                   <div className="flex justify-between items-center">
-                    <Upvote initialUpvotes={item.upvotes}  feedbackId={item.id}/>
-                    <Comment commentCount={item.comments?.length} />
+                    <Upvote
+                      initialUpvotes={item.upvotes}
+                      feedbackId={item.id}
+                    />
+                    <Link
+                      href={`/feedback-detail/${item.id}`}
+                      className="flex items-center"
+                    >
+                      <Comment commentCount={item.comments?.length} />
+                    </Link>
                   </div>
                 </div>
               </div>

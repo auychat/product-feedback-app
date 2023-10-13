@@ -7,13 +7,15 @@ import Button from "@/components/custom/Button";
 import SelectFeature from "@/components/custom/SelectFeature";
 import { FeedbackContext } from "@/context/FeedbackContext";
 import { IEditFeedback } from "@/context/FeedbackInterface";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, set } from "react-hook-form";
+import DeleteModal from "@/components/custom/DeleteModal";
 
 const EditFeedback = () => {
   const router = useRouter();
   const params = useParams();
   const [selectedCategory, setSelectedCategory] = useState("Feature");
   const [selectedStatus, setSelectedStatus] = useState("Feature");
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const { allFeedback, editFeedback, deleteFeedback } =
     useContext(FeedbackContext);
@@ -37,9 +39,18 @@ const EditFeedback = () => {
       data.category = selectedCategory;
       data.status = selectedStatus.toLowerCase();
       // console.log(data);
-      editFeedback(data);
-      router.push(`/feedback-detail/${params?.id}`);
-      // router.push("/")
+      await editFeedback(data);
+
+      if (
+        data.status === "planned" ||
+        data.status === "in-progress" ||
+        data.status === "live"
+      ) {
+        router.push("/roadmap");
+      } else {
+        router.push("/");
+      }
+      // router.push(`/feedback-detail/${params?.id}`);
     } catch (error) {
       console.log(error);
     }
@@ -53,13 +64,12 @@ const EditFeedback = () => {
     setSelectedStatus(selectedOption);
   };
 
-  const handleDeleteFeedback = async () => {
-    try {
-      await deleteFeedback(selectedFeedback[0]?.id);
-      router.push("/");
-    } catch (error) {
-      console.log(error);
-    }
+  const handleDeleteFeedback =  () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
   };
 
   // Return 404 if the feedback is not found
@@ -182,6 +192,14 @@ const EditFeedback = () => {
               >
                 Delete
               </Button>
+              {/* Open Confirm Delete Modal */}
+              {isDeleteModalOpen && (
+                <DeleteModal
+                  selectFeedback={selectedFeedback[0]}
+                  closeDeleteModal={handleDeleteModalClose}
+                />
+              )}
+
               <div className="flex justify-end gap-4">
                 <Button
                   onClick={() => router.back()}
