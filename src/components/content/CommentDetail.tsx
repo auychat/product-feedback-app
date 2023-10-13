@@ -1,25 +1,88 @@
-import React, { useState } from "react";
-import { IComments, IReply } from "@/context/FeedbackInterface";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import {
+  IComments,
+  IProductRequests,
+  IReply,
+  IUser,
+} from "@/context/FeedbackInterface";
 import Image from "next/image";
 import Button from "../custom/Button";
+import { FeedbackContext } from "@/context/FeedbackContext";
 
 interface commentDetailProps {
   commentItems?: IComments[];
+  feedbackItemsId?: number;
 }
 
-const CommentDetail = ({ commentItems }: commentDetailProps) => {
-  const [isReplyOpen, setIsReplyOpen] = useState(false);
-  const [replyToCommentId, setReplyToCommentId] = useState<number | null>(null);
-  const mainCommentCount = commentItems?.length ?? 0;
-  const replyCommentCount = commentItems?.map((c) => c.replies?.length ?? 0);
-  const totalCommentCount =
-    mainCommentCount + (replyCommentCount?.reduce((a, b) => a + b, 0) ?? 0);
+const CommentDetail = ({ commentItems, feedbackItemsId }: commentDetailProps) => {
+  const [isReplyMajorOpen, setIsReplyMajorOpen] = useState(false);
+  const [isReplyMinorOpen, setIsReplyMinorOpen] = useState(false);
+  const [replyMajorComment, setReplyMajorComment] = useState("");
+  const [replyMinorComment, setReplyMinorComment] = useState("");
+  const [majorReplyToCommentId, setMajorReplyToCommentId] = useState<number | null>(null);
+  const [minorReplyToUser, setMinorReplyToUser] = useState<string>("");
 
-  // Function to handle reply comment open and close
-  const handleReplyComment = (commentId: number) => {
-    setReplyToCommentId(commentId);
-    setIsReplyOpen(!isReplyOpen);
+  const {addReplyMajorComment} = useContext(FeedbackContext);
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const maxCharacterCount = 250;
+
+  const totalCommentCount = commentItems?.reduce(
+    (total, comment) => total + (comment.replies?.length || 0) + 1,
+    0
+  );
+
+  // Function to handle reply Major comment open and close
+  const handleReplyMajorCommentOpen = (commentId: number) => {
+    setMajorReplyToCommentId(commentId);
+    setIsReplyMajorOpen(!isReplyMajorOpen);
   };
+
+  // Function to handle reply minor comment open and close
+  const handleReplyMinorCommentOpen = (user: IUser) => {
+    setMinorReplyToUser(user.username);
+    setIsReplyMinorOpen(!isReplyMinorOpen);
+  };
+
+  // Function to upate the comment state and character count
+  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.id === "reply-major-comment") {
+      setReplyMajorComment(e.target.value);
+    }
+
+    if (e.target.id === "reply-minor-comment") {
+      setReplyMinorComment(e.target.value);
+    }
+  };
+
+  // Auto adjust height of textarea
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+      textAreaRef.current.style.height =
+        textAreaRef.current?.scrollHeight + "px";
+    }
+  }, [replyMajorComment, replyMinorComment]);
+
+  // Function to handle submit Major comment
+  const handleAddMajorComment = (user: IUser) => {
+    if (replyMajorComment.length > 0) {
+      addReplyMajorComment(feedbackItemsId!, user.username, replyMajorComment)
+      setReplyMajorComment("");
+      setIsReplyMajorOpen(false);
+    }
+  };
+
+  // Function to handle submit Minor comment
+  const handleAddMinorComment = () => {
+    if (replyMinorComment.length > 0) {
+      setReplyMinorComment("");
+      setIsReplyMinorOpen(false);
+    }
+  };
+
+  const remainingMajorCharacter = maxCharacterCount - replyMajorComment.length;
+  const remainingMinorCharacter = maxCharacterCount - replyMinorComment.length;
 
   return (
     <div className="w-full min-h-[150px] bg-white rounded-[10px] shadow-sm flex flex-col gap-8 p-8">
@@ -47,7 +110,7 @@ const CommentDetail = ({ commentItems }: commentDetailProps) => {
             </div>
             <button
               type="button"
-              onClick={() => {handleReplyComment(comment.id), console.log("reply to", comment.user.username)}}
+              onClick={() => handleReplyMajorCommentOpen(comment.id)}
               className="text-b3 font-semibold text-blue-primary"
             >
               Reply
@@ -58,21 +121,38 @@ const CommentDetail = ({ commentItems }: commentDetailProps) => {
               {comment.content}
             </p>
 
-            {/* Add new Reply Comment */}
-            {replyToCommentId === comment.id && isReplyOpen && (
+            {/* Add new Reply Major Comment */}
+            {majorReplyToCommentId === comment.id && isReplyMajorOpen && (
               <div className="flex items-center justify-between gap-4 pt-6">
-                <textarea
-                  id="reply-comment"
-                  // value={reply-comment}
-                  // onChange={handleCommentChange}
-                  className="bg-gray-background w-[461px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
-                  // ref={textAreaRef}
-                />
-                <Button className="w-[117px]" btnColor="purple-light">Post Reply</Button>
+                <div>
+                  <textarea
+                    id="reply-major-comment"
+                    value={replyMajorComment}
+                    onChange={handleCommentChange}
+                    maxLength={maxCharacterCount}
+                    className="bg-gray-background w-[461px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
+                    ref={textAreaRef}
+                  />
+                  <p
+                    id="charCount"
+                    className="text-b2 text-gray-text font-normal"
+                  >{`${remainingMajorCharacter} Character${
+                    remainingMajorCharacter > 1 ? "s" : ""
+                  } left`}</p>
+                </div>
+
+                <Button
+                  className="w-[117px] mb-6"
+                  btnColor="purple-light"
+                  onClick={() => handleAddMajorComment(comment.user)}
+                >
+                  Post Reply
+                </Button>
               </div>
             )}
+            {/* End of Reply Major Comment */}
 
-            {/* Reply Comment */}
+            {/*Start Reply Minor Comment */}
             {Array.isArray(comment.replies) && comment.replies?.length > 0 && (
               <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)]" />
             )}
@@ -102,18 +182,48 @@ const CommentDetail = ({ commentItems }: commentDetailProps) => {
                     <button
                       type="button"
                       className="text-b3 font-semibold text-blue-primary"
-                      onClick={() => console.log("reply to", reply.user.username)}
+                      onClick={() => handleReplyMinorCommentOpen(reply.user)}
                     >
                       Reply
                     </button>
                   </div>
-                  <div className="w-full pl-[72px] flex">
+                  <div className="w-full pl-[72px] flex flex-col">
                     <p className="text-b2 text-gray-text font-normal">
                       <span className="text-b2 font-bold text-purple-light">
                         @{reply.replyingTo}{" "}
                       </span>
                       {reply.content}
                     </p>
+                    {/* Add new Reply Minor Comment */}
+                    {isReplyMinorOpen &&
+                      comment.replies &&
+                      index === comment.replies?.length - 1 && (
+                        <div className="flex items-center justify-between gap-4 pt-6">
+                          <div>
+                            <textarea
+                              id="reply-minor-comment"
+                              value={replyMinorComment}
+                              onChange={handleCommentChange}
+                              maxLength={maxCharacterCount}
+                              className="bg-gray-background w-[416px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
+                              ref={textAreaRef}
+                            />
+                            <p
+                              id="minorCharCount"
+                              className="text-b2 text-gray-text font-normal"
+                            >{`${remainingMinorCharacter} Character${
+                              remainingMinorCharacter > 1 ? "s" : ""
+                            } left`}</p>
+                          </div>
+                          <Button
+                            className="w-[117px] mb-6"
+                            btnColor="purple-light"
+                            onClick={handleAddMinorComment}
+                          >
+                            Post Reply
+                          </Button>
+                        </div>
+                      )}
                   </div>
                 </div>
               ))}

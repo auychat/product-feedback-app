@@ -10,6 +10,11 @@ export interface IFeedbackContextValue {
   editFeedback: (editFeedback: IEditFeedback) => void;
   deleteFeedback: (feedbackId: number) => void;
   addNewComment: (feedbackId: number, newComment: string) => void;
+  addReplyMajorComment: (
+    feedbackId: number,
+    replyToUser: string,
+    newReplyMajorComment: string,
+  ) => void;
   updateUpvote: (feedbackId: number) => void;
 }
 

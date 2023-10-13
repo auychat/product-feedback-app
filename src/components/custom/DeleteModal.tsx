@@ -20,7 +20,16 @@ const DeleteModal = ({selectFeedback, closeDeleteModal} : DeleteModalProps) => {
     try {
       await deleteFeedback(selectFeedback.id);
       closeDeleteModal();
-      router.push("/");
+
+      if (
+        selectFeedback.status === "planned" ||
+        selectFeedback.status === "in-progress" ||
+        selectFeedback.status === "live"
+      ) {
+        router.push("/roadmap");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.log(error);
     }

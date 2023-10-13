@@ -21,6 +21,7 @@ const FeedbackDetail = () => {
     ? allFeedback.filter((product) => product.id === +params.id)
     : [];
 
+  const seletedItemId = selectedItem[0]?.id;
   const selectedComment = selectedItem[0]?.comments;
 
   // Function to add new comment
@@ -30,13 +31,26 @@ const FeedbackDetail = () => {
     addNewComment(feedbackId, newCommentValue);
   };
 
+  // Function to handle Goback button
+  const handleGoBack = () => {
+    if (
+      selectedItem[0].status === "planned" ||
+      selectedItem[0].status === "in-progress" ||
+      selectedItem[0].status === "live"
+    ) {
+      router.push("/roadmap");
+    } else {
+      router.push("/");
+    }
+  };
+
   return (
     <div className="bg-gray-background">
       <div className="max-w-[730px] min-h-[750px] mx-auto flex flex-col gap-6 pt-[94px] pb-[130px]">
         {/* Header */}
         <div className="h-[44px] w-full rounded-[10px] flex items-center justify-between">
           <Button
-            onClick={() => router.back()}
+            onClick={() => handleGoBack()}
             btnColor="goback-light"
             className="px-0 py-0 w-auto h-auto"
           >
@@ -54,7 +68,7 @@ const FeedbackDetail = () => {
         <SuggestionItem feedbackItems={selectedItem} />
 
         {/* Comment Details */}
-        <CommentDetail commentItems={selectedComment} />
+        <CommentDetail feedbackItemsId={seletedItemId} commentItems={selectedComment} />
 
         {/* Add Comment */}
 

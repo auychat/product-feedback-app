@@ -24,13 +24,13 @@ const Roadmap = () => {
 
   return (
     <div className="bg-gray-background">
-      <div className="max-w-[1110px] min-h-[1367px] mx-auto flex flex-col gap-12 pt-[94px]">
+      <div className="max-w-[1110px] min-h-[1024px] mx-auto flex flex-col gap-12 pt-[94px] pb-[130px]">
         {/* Header */}
         <div className="bg-blue-secondary h-[113px] w-full rounded-[10px] flex items-center">
           <div className="flex items-center justify-between w-full">
             <div className="flex flex-col gap-3 items-start justify-center">
               <Button
-                onClick={() => router.back()}
+                onClick={() => router.push("/")}
                 btnColor="goback-dark"
                 className="px-8 py-2 w-auto h-auto"
               >

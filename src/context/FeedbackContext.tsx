@@ -2,25 +2,35 @@
 
 import React, { useState, useMemo, createContext } from "react";
 import { dummyData } from "@/pages/api/dummyData";
-import { IAddNewFeedback, IEditFeedback, IFeedbackContextValue, IProductRequests } from "./FeedbackInterface";
+import {
+  IAddNewFeedback,
+  IEditFeedback,
+  IFeedbackContextValue,
+  IProductRequests,
+} from "./FeedbackInterface";
 import { addNewFeedback } from "./utility_functions/addNewFeedback";
 import { updateUpvote } from "./utility_functions/updateUpvote";
 import { addNewComment } from "./utility_functions/addNewComment";
 import { editFeedback } from "./utility_functions/editFeedback";
+import { addReplyMajorComment } from "./utility_functions/addReplyMajorComment";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({
-  rawData: {currentUser: {image: "", name: "", username: ""}, productRequests: []},
+  rawData: {
+    currentUser: { image: "", name: "", username: "" },
+    productRequests: [],
+  },
   allFeedback: [],
   suggestProduct: [],
   nonSuggestProduct: [],
   sortingCriteria: "Most Upvotes",
   setSortingCriteria: () => {},
   sortSuggestProduct: [],
-  addNewFeedback : () => {},
+  addNewFeedback: () => {},
   editFeedback: () => {},
   deleteFeedback: () => {},
   addNewComment: () => {},
+  addReplyMajorComment: () => {},
   updateUpvote: () => {},
 });
 
@@ -30,7 +40,8 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const rawData = dummyData;
   const initailFeedback = dummyData.productRequests;
-  const [allFeedback, setAllFeedback] = useState<IProductRequests[]>(initailFeedback );
+  const [allFeedback, setAllFeedback] =
+    useState<IProductRequests[]>(initailFeedback);
   const productRequests = allFeedback;
   const [sortingCriteria, setSortingCriteria] =
     useState<string>("Most Upvotes");
@@ -46,12 +57,12 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
   // Fucntion to Add new feedback
   const handleAddnewFeedback = (newFeedback: IAddNewFeedback) => {
     addNewFeedback(newFeedback, allFeedback, setAllFeedback);
-  }
+  };
 
   // Function to Edit Feedback
   const handleEditFeedback = (editedFeedback: IEditFeedback) => {
     editFeedback(editedFeedback, allFeedback, setAllFeedback);
-  }
+  };
 
   // Function to Delete Feedback
   const deleteFeedback = (feedbackId: number) => {
@@ -59,25 +70,41 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
       (feedback) => feedback.id !== feedbackId
     );
     setAllFeedback(newFeedback);
-  }
+  };
 
   // Function to update upvote
   const handleUpdateUpvote = (feedbackId: number) => {
     updateUpvote(feedbackId, allFeedback, setAllFeedback);
-  }
+  };
 
   // Function to add new comment
-  const handleAddNewComment = (feedbackId:number, newComment: string) => {
-    addNewComment(feedbackId, newComment,rawData, allFeedback, setAllFeedback);
-  }
+  const handleAddNewComment = (feedbackId: number, newComment: string) => {
+    addNewComment(feedbackId, newComment, rawData, allFeedback, setAllFeedback);
+  };
+
+  // Function to add new reply major comment
+  const handleAddReplyMajorComment = (
+    feedbackId: number,
+    replyToUser: string,
+    newReplyMajorComment: string
+  ) => {
+    addReplyMajorComment(
+      feedbackId,
+      replyToUser,
+      newReplyMajorComment,
+      rawData,
+      allFeedback,
+      setAllFeedback
+    );
+  };
 
   // Function to calculate the total comment count for a product (including replies)
   const toTalCommentCount = (product: IProductRequests): number => {
-    let  totalComment = product.comments?.length ?? 0;
+    let totalComment = product.comments?.length ?? 0;
     if (product.comments) {
       product.comments.forEach((comment) => {
         totalComment += comment.replies?.length ?? 0;
-      })
+      });
     }
     return totalComment;
   };
@@ -92,11 +119,11 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
       sortedProductRequest.sort((a, b) => a.upvotes - b.upvotes);
     } else if (sortingCriteria === "Most Comments") {
       sortedProductRequest.sort(
-        (a,b) => toTalCommentCount(b) - toTalCommentCount(a)
+        (a, b) => toTalCommentCount(b) - toTalCommentCount(a)
       );
     } else if (sortingCriteria === "Least Comments") {
       sortedProductRequest.sort(
-        (a,b) => toTalCommentCount(a) - toTalCommentCount(b)
+        (a, b) => toTalCommentCount(a) - toTalCommentCount(b)
       );
     }
     return sortedProductRequest;
@@ -114,6 +141,7 @@ export const FeedbackProvider: React.FC<{ children: React.ReactNode }> = ({
     editFeedback: handleEditFeedback,
     deleteFeedback,
     addNewComment: handleAddNewComment,
+    addReplyMajorComment: handleAddReplyMajorComment,
     updateUpvote: handleUpdateUpvote,
   };
 
