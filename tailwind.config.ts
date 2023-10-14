@@ -29,8 +29,12 @@ const config: Config = {
         'orange-accent': '#F49F85',
         'cyan-accent': '#62BCFA',
       },
-
-      backgroundImage: {
+      typography: {
+        'break-word':{
+          css: {
+            'overflow-wrap': 'break-word',
+          }
+        }
       },
     },
 

@@ -56,7 +56,7 @@ const AddComment = ({onAddComment}: IAddComment) => {
         onChange={handleCommentChange}
         maxLength={maxCharacterCount}
         placeholder="Type your comment here"
-        className="bg-gray-background w-[664px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
+        className="bg-gray-background w-[664px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden break-word"
         ref={textAreaRef}
       />
       <div className="flex justify-between">

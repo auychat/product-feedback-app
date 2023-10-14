@@ -78,7 +78,7 @@ const RoadmapItem = ({ roadmapItems, status }: RoadmapItemProps) => {
             </div>
 
             {/* Title Description */}
-            <Link href={`/feedback-detail/${item.id}`}>
+            <Link href={`/feedback-detail/${item.id}`} className="whitespace-normal break-words">
               <h3 className="text-hm text-blue-dark">{item.title}</h3>
               <p className="text-b1 text-gray-text">{item.description}</p>
             </Link>

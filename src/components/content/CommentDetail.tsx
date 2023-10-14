@@ -165,7 +165,7 @@ const CommentDetail = ({
 
             {/*Start Reply Minor Comment */}
             {Array.isArray(comment.replies) && comment.replies?.length > 0 && (
-              <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-60px)]" />
+              <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)]"  />
             )}
             <div className="translate-x-[-28px] w-[621px]">
               {comment.replies?.map((reply, index) => (

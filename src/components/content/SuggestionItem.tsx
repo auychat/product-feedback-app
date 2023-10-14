@@ -36,12 +36,12 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
               />
 
               {/* Title description */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 max-w-[510px] whitespace-normal break-words">
                 <Link href={`/feedback-detail/${product.id}`}>
                   <h2 className="text-hm text-blue-dark hover:text-blue-primary">
                     {product.title}
                   </h2>
-                  <p className="text-b1 text-gray-text font-normal">
+                  <p className="text-b1 text-gray-text font-normal ">
                     {product.description}
                   </p>
                 </Link>
@@ -61,7 +61,7 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
             {/* Comment */}
             <Link
               href={`/feedback-detail/${product.id}`}
-              className="flex items-center"
+              className="flex items-center mb-4"
             >
               <Comment commentCount={CommentCount[index]} />
             </Link>
