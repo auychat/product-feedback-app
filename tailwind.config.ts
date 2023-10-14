@@ -16,7 +16,13 @@ const config: Config = {
       "b2": ['15px', { lineHeight: '22px', fontWeight: 'normal' }],
       "b3": ['13px', { lineHeight: '19px', fontWeight: 'semibold' }],
     },
-
+    screens: {
+      xs: { max: "480px" },
+      sm: { min: "481px", max: "768px" },
+      md: { min: "769px", max: "1024px" },
+      lg: { min: "1025px", max: "1280px" },
+      xl: { min: "1281px" },
+    },
     extend: {
       colors: {
         'purple-light': '#AD1FEA',

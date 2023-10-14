@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Header from "./Header";
+import Header from "../header/Header";
 import NoFeedback from "./NoFeedback";
 import SuggestionItem from "./SuggestionItem";
 import { FeedbackContext } from "@/context/FeedbackContext";
@@ -10,10 +10,16 @@ const Content = () => {
   // const suggestionCount = 0;
 
   return (
-    <div className="w-[825px] rounded-[10px]">
+    <div className="w-[825px] rounded-[10px] xs:min-w-[327px] xs:max-w-full">
       <div className="flex flex-col gap-6">
         <Header />
-        {suggestionCount === 0 ? <NoFeedback /> : <SuggestionItem feedbackItems={sortSuggestProduct} />}
+        <div className="xs:px-6 flex flex-col gap-4">
+          {suggestionCount === 0 ? (
+            <NoFeedback />
+          ) : (
+            <SuggestionItem feedbackItems={sortSuggestProduct} />
+          )}
+        </div>
       </div>
     </div>
   );

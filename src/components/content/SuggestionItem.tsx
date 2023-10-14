@@ -27,21 +27,23 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
           key={product.id}
           className="w-full min-h-[151px] bg-white rounded-[10px] shadow-sm flex items-center"
         >
-          <div className="py-7 px-8 flex gap-6 w-full justify-between">
-            <div className="flex gap-10">
+          <div className="py-7 px-8 flex gap-6 w-full justify-between xs:px-6 xs:py-6 xs:flex-col xs:gap-4">
+            <div className="flex gap-10 xs:flex-col">
               {/* Upvote number */}
-              <Upvote
-                initialUpvotes={product.upvotes}
-                feedbackId={product.id}
-              />
+              <div className="xs:hidden">
+                <Upvote
+                  initialUpvotes={product.upvotes}
+                  feedbackId={product.id}
+                />
+              </div>
 
               {/* Title description */}
-              <div className="flex flex-col gap-3 max-w-[510px] whitespace-normal break-words">
-                <Link href={`/feedback-detail/${product.id}`}>
-                  <h2 className="text-hm text-blue-dark hover:text-blue-primary">
+              <div className="flex flex-col gap-3 max-w-[510px] whitespace-normal break-words xs:gap-2">
+                <Link href={`/feedback-detail/${product.id}`} className="flex flex-col gap-3">
+                  <h2 className="text-hm text-blue-dark hover:text-blue-primary xs:text-b3 xs:font-bold xs:tracking-[-0.18px]">
                     {product.title}
                   </h2>
-                  <p className="text-b1 text-gray-text font-normal ">
+                  <p className="text-b1 text-gray-text font-normal xs:text-b3 ">
                     {product.description}
                   </p>
                 </Link>
@@ -59,12 +61,21 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
             </div>
 
             {/* Comment */}
-            <Link
-              href={`/feedback-detail/${product.id}`}
-              className="flex items-center mb-4"
-            >
-              <Comment commentCount={CommentCount[index]} />
-            </Link>
+            <div className="flex items-center justify-between">
+              {/* Upvote number */}
+              <div className="xs:block">
+                <Upvote
+                  initialUpvotes={product.upvotes}
+                  feedbackId={product.id}
+                />
+              </div>
+              <Link
+                href={`/feedback-detail/${product.id}`}
+                className="flex items-center mb-4 xs:mb-0"
+              >
+                <Comment commentCount={CommentCount[index]} />
+              </Link>
+            </div>
           </div>
         </div>
       ))}

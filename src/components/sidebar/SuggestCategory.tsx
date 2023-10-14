@@ -6,7 +6,7 @@ const SuggestCategory = () => {
   const { handleSelectTag } = useContext(FeedbackContext);
 
   return (
-    <div className="w-[255px] min-h-[166px] p-6 bg-white rounded-[10px] shadow-sm">
+    <div className="w-[255px] min-h-[166px] p-6 bg-white rounded-[10px] shadow-sm xs:w-[223px]">
       <div className="flex items-center flex-wrap gap-3.5">
         <CategoryTag tag="All" handleSelectTag={handleSelectTag} disabled={false} />
         <CategoryTag tag="UI" handleSelectTag={handleSelectTag} disabled={false}/>

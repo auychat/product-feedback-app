@@ -10,11 +10,11 @@ const Header = () => {
   const { suggestProduct, sortingCriteria } = useContext(FeedbackContext);
   const suggestionCount = suggestProduct.length;
   return (
-    <div className="bg-blue-secondary h-[72px] w-full rounded-[10px]">
+    <div className="bg-blue-secondary h-[72px] w-full rounded-[10px] xs:min-w-[375px] xs:h-[56px] xs:rounded-none xs:px-6">
       <div className="flex items-center justify-between">
-        <div className="flex gap-6 items-center px-6">
+        <div className="flex gap-6 items-center px-6 xs:px-0">
           {/* Suggesttions */}
-          <div className="flex gap-4">
+          <div className="flex gap-4 xs:hidden">
             {/* Icon Suggestions */}
             <svg width="23" height="24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -31,8 +31,8 @@ const Header = () => {
         </div>
 
         {/* Button +Add Feedback */}
-        <div className="pr-4">
-          <Button onClick={() => router.push("/new-feedback")} btnColor="purple-light">
+        <div className="pr-4 xs:pr-0">
+          <Button onClick={() => router.push("/new-feedback")} btnColor="purple-light" className="xs:w-[134px] xs:text-b3 xs:px-0">
             + Add Feedback
           </Button>
         </div>

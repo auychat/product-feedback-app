@@ -29,11 +29,11 @@ const Select = ({ defaultOption }: SelectProps) => {
   return (
     <div
       onClick={() => setIsOpen(!isOpen)}
-      className="relative w-[194px] h-[72px] rounded-[10px] bg-blue-secondary flex items-center justify-center cursor-pointer"
+      className="relative w-[194px] h-[72px] rounded-[10px] bg-blue-secondary flex items-center justify-center cursor-pointer xs:w-[149px] xs:h-[56px]"
     >
       <div className="flex items-center justify-center gap-2">
         <p
-          className={`text-hs ${
+          className={`text-hs xs:text-b3 ${
             isOpen ? "text-[#F2F4FE] text-opacity-75" : "text-[#F2F4FE]"
           }`}
         >

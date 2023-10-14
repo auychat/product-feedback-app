@@ -2,23 +2,21 @@
 @tailwind components;
 @tailwind utilities; */
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 :root {
-
 }
 
-
-
 body {
-  
+    max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0 auto;
 }
 
 textarea {
-    resize: none;
-    appearance: none;
-    outline: none;
+  resize: none;
+  appearance: none;
+  outline: none;
 }
-
