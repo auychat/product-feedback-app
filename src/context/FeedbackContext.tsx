@@ -15,7 +15,6 @@ import { editFeedback } from "./utility_functions/editFeedback";
 import { addReplyMajorComment } from "./utility_functions/addReplyMajorComment";
 import { addReplyMinorComment } from "./utility_functions/addReplyMinorComment";
 import { sortProduct } from "./utility_functions/sortProduct";
-import { set } from "react-hook-form";
 
 // Create a new context for managing the feedback data
 export const FeedbackContext = createContext<IFeedbackContextValue>({

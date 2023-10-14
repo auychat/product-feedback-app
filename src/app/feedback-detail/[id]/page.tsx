@@ -7,14 +7,12 @@ import SuggestionItem from "@/components/content/SuggestionItem";
 import { FeedbackContext } from "@/context/FeedbackContext";
 import CommentDetail from "@/components/content/CommentDetail";
 import AddComment from "@/components/content/AddComment";
-import { IAddNewComment } from "@/context/FeedbackInterface";
 
 const FeedbackDetail = () => {
   const router = useRouter();
   const params = useParams();
 
-  const { allFeedback, suggestProduct, addNewComment } =
-    useContext(FeedbackContext);
+  const { allFeedback, addNewComment } = useContext(FeedbackContext);
   const [newCommentValue, setNewCommentValue] = useState("");
 
   const selectedItem = params?.id

@@ -1,26 +1,24 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext,useState, useEffect } from "react";
 import Button from "@/components/custom/Button";
 import { FeedbackContext } from "@/context/FeedbackContext";
-import CategoryTag from "@/components/custom/CategoryTag";
-import Upvote from "@/components/custom/Upvote";
-import Comment from "@/components/custom/Comment";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import RoadmapItem from "@/components/content/RoadmapItem";
+import { IProductRequests } from "@/context/FeedbackInterface";
 
 const Roadmap = () => {
   const router = useRouter();
-  const { nonSuggestProduct } = useContext(FeedbackContext);
-  const plannedStatus = nonSuggestProduct.filter(
-    (product) => product.status === "planned"
-  );
-  const inProgressStatus = nonSuggestProduct.filter(
-    (product) => product.status === "in-progress"
-  );
-  const liveStatus = nonSuggestProduct.filter(
-    (product) => product.status === "live"
-  );
+  const { allFeedback } = useContext(FeedbackContext);
+  const statuses = ["Planned", "In-Progress", "Live"];
+
+  const feedbackData: Record<string, IProductRequests[]> = {};
+
+  statuses.forEach((status) => {
+    feedbackData[status] = allFeedback.filter(
+      (item) => item.status.toLowerCase() === status.toLowerCase()
+    );
+  });
 
   return (
     <div className="bg-gray-background">
@@ -52,202 +50,14 @@ const Roadmap = () => {
         </div>
 
         <div className="flex flex-row gap-[30px]">
-          {/* Column 1 Planned */}
-          <div className="min-w-[350px] flex flex-col gap-6">
-            <div className="mb-2">
-              <h3 className="text-hm text-blue-dark">
-                Planned ({plannedStatus.length})
-              </h3>
-              <p className="text-b1 text-gray-text">
-                Ideas prioritized for research
-              </p>
-            </div>
-            {plannedStatus.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white min-h-[272px] rounded-[10px] shadow-sm"
-              >
-                <hr className="h-[6px] w-full bg-orange-accent rounded-t-[10px]" />
-
-                {/* Status */}
-                <div className="p-8 flex flex-col gap-4">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-[8px] h-[8px] rounded-full bg-orange-accent`}
-                    />
-                    <p className="text-b1 text-gray-text font-normal">
-                      {item.status.charAt(0).toUpperCase() +
-                        item.status.slice(1)}
-                    </p>
-                  </div>
-
-                  {/* Title Description */}
-                  <Link href={`/feedback-detail/${item.id}`}>
-                    <h3 className="text-hm text-blue-dark">{item.title}</h3>
-                    <p className="text-b1 text-gray-text">{item.description}</p>
-                  </Link>
-
-                  {/* Category */}
-                  <div>
-                    <CategoryTag
-                      tag={
-                        item.category.charAt(0).toUpperCase() +
-                        item.category.slice(1)
-                      }
-                      disabled={true}
-                      preventActive={true}
-                    />
-                  </div>
-
-                  {/* Upvote and Comment */}
-                  <div className="flex justify-between items-center">
-                    <Upvote
-                      initialUpvotes={item.upvotes}
-                      feedbackId={item.id}
-                    />
-                    <Link
-                      href={`/feedback-detail/${item.id}`}
-                      className="flex items-center"
-                    >
-                      <Comment commentCount={item.comments?.length} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Column 2 In-Progress */}
-          <div className="min-w-[350px] flex flex-col gap-6">
-            <div className="mb-2">
-              <h3 className="text-hm text-blue-dark">
-                In-Progress ({inProgressStatus.length})
-              </h3>
-              <p className="text-b1 text-gray-text">
-                Currently being developed
-              </p>
-            </div>
-            {inProgressStatus.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white min-h-[272px] rounded-[10px] shadow-sm"
-              >
-                <hr className="h-[6px] w-full bg-purple-light rounded-t-[10px]" />
-
-                {/* Status */}
-                <div className="p-8 flex flex-col gap-4">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-[8px] h-[8px] rounded-full bg-purple-light`}
-                    />
-                    <p className="text-b1 text-gray-text font-normal">
-                      {item.status.charAt(0).toUpperCase() +
-                        item.status.slice(1)}
-                    </p>
-                  </div>
-
-                  {/* Title Description */}
-                  <Link href={`/feedback-detail/${item.id}`}>
-                    <h3 className="text-hm text-blue-dark">{item.title}</h3>
-                    <p className="text-b1 text-gray-text">{item.description}</p>
-                  </Link>
-
-                  {/* Category */}
-                  <div>
-                    <CategoryTag
-                      tag={
-                        item.category.charAt(0).toUpperCase() +
-                        item.category.slice(1)
-                      }
-                      disabled={true}
-                      preventActive={true}
-                    />
-                  </div>
-
-                  {/* Upvote and Comment */}
-                  <div className="flex justify-between items-center">
-                    <Upvote
-                      initialUpvotes={item.upvotes}
-                      feedbackId={item.id}
-                    />
-                    <Link
-                      href={`/feedback-detail/${item.id}`}
-                      className="flex items-center"
-                    >
-                      <Comment commentCount={item.comments?.length} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Column 3 Live*/}
-          <div className="min-w-[350px] flex flex-col gap-6">
-            <div className="mb-2">
-              <h3 className="text-hm text-blue-dark">
-                Live ({liveStatus.length})
-              </h3>
-              <p className="text-b1 text-gray-text">Released features</p>
-            </div>
-            {liveStatus.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white min-h-[272px] rounded-[10px] shadow-sm"
-              >
-                <hr className="h-[6px] w-full bg-cyan-accent rounded-t-[10px]" />
-
-                {/* Status */}
-                <div className="p-8 flex flex-col gap-4">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`w-[8px] h-[8px] rounded-full bg-cyan-accent`}
-                    />
-                    <p className="text-b1 text-gray-text font-normal">
-                      {item.status.charAt(0).toUpperCase() +
-                        item.status.slice(1)}
-                    </p>
-                  </div>
-
-                  {/* Title Description */}
-                  <Link href={`/feedback-detail/${item.id}`}>
-                    <h3 className="text-hm text-blue-dark">{item.title}</h3>
-                    <p className="text-b1 text-gray-text">{item.description}</p>
-                  </Link>
-
-                  {/* Category */}
-                  <div>
-                    <CategoryTag
-                      tag={
-                        item.category.charAt(0).toUpperCase() +
-                        item.category.slice(1)
-                      }
-                      disabled={true}
-                      preventActive={true}
-                    />
-                  </div>
-
-                  {/* Upvote and Comment */}
-                  <div className="flex justify-between items-center">
-                    <Upvote
-                      initialUpvotes={item.upvotes}
-                      feedbackId={item.id}
-                    />
-                    <Link
-                      href={`/feedback-detail/${item.id}`}
-                      className="flex items-center"
-                    >
-                      <Comment commentCount={item.comments?.length} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {statuses.map((status, index) => (
+            <RoadmapItem key={index} roadmapItems={feedbackData[status]} status={status} />
+          ))}
         </div>
       </div>
     </div>
   );
 };
+
 
 export default Roadmap;
