@@ -37,20 +37,21 @@ const DeleteModal = ({selectFeedback, closeDeleteModal} : DeleteModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white w-[420px] min-h-[200px] p-8 rounded-lg flex flex-col gap-4 relative xs:w-[343px] xs:h-[284px] xs:p-6">
-        <h2 className="text-hl font-bold text-red-500">Delete this feedback?</h2>
-        <p className="text-b2 text-blue-dark font-medium">
+      <div className="bg-white w-[420px] min-h-[200px] p-8 rounded-lg flex flex-col gap-4 relative xs:w-[327px] xs:h-[284px] xs:p-6">
+        <h2 className="text-hl font-bold text-red-500 xs:text-hm">Delete this feedback?</h2>
+        <p className="text-b2 text-blue-dark font-medium xs:text-b3">
           Are you sure you want to delete the <span className="text-red-500">&apos;{feedbackTitle}&apos; </span>
           feedback? This action will remove all of this feedback data and cannot be
           reversed.
         </p>
 
-        <div className="flex flex-row w-full justify-between gap-6 xs:flex-col">
+        <div className="flex flex-row w-full justify-between gap-6 xs:flex-col xs:gap-4 xs:w-full">
           <Button
             btnColor="danger"
             onClick={() => {
                 handleDeleteFeedback();
             }}
+            className="xs:w-full"
           >
             Delete
           </Button>
@@ -60,6 +61,7 @@ const DeleteModal = ({selectFeedback, closeDeleteModal} : DeleteModalProps) => {
             onClick={() => {
               closeDeleteModal()
             }}
+            className="xs:w-full"
           >
             Cancel
           </Button>

@@ -96,13 +96,13 @@ const CommentDetail = ({
   const remainingMinorCharacter = maxCharacterCount - replyMinorComment.length;
 
   return (
-    <div className="w-full min-h-[150px] bg-white rounded-[10px] shadow-sm flex flex-col gap-8 p-8">
+    <div className="w-full min-h-[150px] bg-white rounded-[10px] shadow-sm flex flex-col gap-8 p-8 xs:gap-6 xs:p-6">
       <h3 className="text-hm text-blue-dark">{totalCommentCount} Comments</h3>
 
       {commentItems?.map((comment, index) => (
         <div key={comment.id} className="flex flex-col gap-4 ">
           <div className="flex items-center justify-between">
-            <div className="flex gap-8">
+            <div className="flex gap-8 xs:gap-4">
               <div className="relative w-10 h-10 rounded-full">
                 <Image
                   src={comment.user.image}
@@ -127,51 +127,66 @@ const CommentDetail = ({
               Reply
             </button>
           </div>
-          <div className="w-full pl-[72px] relative">
-            <p className="text-b2 text-gray-text font-normal">
+          <div className="w-full pl-[72px] relative xs:pl-0">
+            <p className="text-b2 text-gray-text font-normal xs:text-b3">
               {comment.content}
             </p>
 
             {/* Add new Reply Major Comment */}
             {majorReplyToCommentId === comment.id && isReplyMajorOpen && (
               <div className="flex items-center justify-between gap-4 pt-6">
-                <div>
+                <div className="xs:flex xs:flex-col xs:w-full xs:gap-4">
                   <textarea
                     id="reply-major-comment"
                     value={replyMajorComment}
                     onChange={handleCommentChange}
                     maxLength={maxCharacterCount}
-                    className="bg-gray-background w-[461px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
+                    className="bg-gray-background w-[461px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden xs:min-w-[279px] xs:w-full xs:text-b3"
                     ref={textAreaRef}
                   />
-                  <p
-                    id="charCount"
-                    className="text-b2 text-gray-text font-normal"
-                  >{`${remainingMajorCharacter} Character${
-                    remainingMajorCharacter > 1 ? "s" : ""
-                  } left`}</p>
+
+                  <div className="xs:flex xs:items-center xs:justify-between">
+                    <p
+                      id="charCount"
+                      className="text-b2 text-gray-text font-normal xs:text-b3"
+                    >{`${remainingMajorCharacter} Character${
+                      remainingMajorCharacter > 1 ? "s" : ""
+                    } left`}</p>
+
+                    <div className="xs:block">
+                      <Button
+                        className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0"
+                        btnColor="purple-light"
+                        onClick={() => handleAddMajorComment(comment.user)}
+                      >
+                        Post Reply
+                      </Button>
+                    </div>
+                  </div>
                 </div>
 
-                <Button
-                  className="w-[117px] mb-6"
-                  btnColor="purple-light"
-                  onClick={() => handleAddMajorComment(comment.user)}
-                >
-                  Post Reply
-                </Button>
+                <div className="xs:hidden">
+                  <Button
+                    className="w-[117px] mb-6"
+                    btnColor="purple-light"
+                    onClick={() => handleAddMajorComment(comment.user)}
+                  >
+                    Post Reply
+                  </Button>
+                </div>
               </div>
             )}
             {/* End of Reply Major Comment */}
 
             {/*Start Reply Minor Comment */}
             {Array.isArray(comment.replies) && comment.replies?.length > 0 && (
-              <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)]"  />
+              <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)] xs:top-[125px] xs:left-[-20px] xs:h-[calc(25%)]" />
             )}
-            <div className="translate-x-[-28px] w-[621px]">
+            <div className="translate-x-[-28px] w-[621px] xs:translate-x-[23px] xs:min-w-[256px] xs:w-full xs:pr-6">
               {comment.replies?.map((reply, index) => (
                 <div key={index} className="flex flex-col gap-4 w-full pt-8">
                   <div className="flex items-center justify-between">
-                    <div className="flex gap-8">
+                    <div className="flex gap-8 xs:gap-4">
                       <div className="relative w-10 h-10 rounded-full">
                         <Image
                           src={reply.user.image}
@@ -200,9 +215,9 @@ const CommentDetail = ({
                       Reply
                     </button>
                   </div>
-                  <div className="w-full pl-[72px] flex flex-col">
-                    <p className="text-b2 text-gray-text font-normal">
-                      <span className="text-b2 font-bold text-purple-light">
+                  <div className="w-full pl-[72px] flex flex-col xs:pl-0">
+                    <p className="text-b2 text-gray-text font-normal xs:text-b3">
+                      <span className="text-b2 font-bold text-purple-light xs:text-b3">
                         @{reply.replyingTo}{" "}
                       </span>
                       {reply.content}
@@ -213,29 +228,45 @@ const CommentDetail = ({
                       comment.replies &&
                       index === comment.replies?.length - 1 && (
                         <div className="flex items-center justify-between gap-4 pt-6">
-                          <div>
+                          <div className="xs:flex xs:flex-col xs:w-full xs:gap-4">
                             <textarea
                               id="reply-minor-comment"
                               value={replyMinorComment}
                               onChange={handleCommentChange}
                               maxLength={maxCharacterCount}
-                              className="bg-gray-background w-[416px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden"
+                              className="bg-gray-background w-[416px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden xs:min-w-[256px] xs:w-full xs:text-b3"
                               ref={textAreaRef}
                             />
-                            <p
-                              id="minorCharCount"
-                              className="text-b2 text-gray-text font-normal"
-                            >{`${remainingMinorCharacter} Character${
-                              remainingMinorCharacter > 1 ? "s" : ""
-                            } left`}</p>
+
+                            <div className="xs:flex xs:items-center xs:justify-between">
+                              <p
+                                id="minorCharCount"
+                                className="text-b2 text-gray-text font-normal xs:text-b3"
+                              >{`${remainingMinorCharacter} Character${
+                                remainingMinorCharacter > 1 ? "s" : ""
+                              } left`}</p>
+
+                              <div className="xs:block">
+                                <Button
+                                  className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0"
+                                  btnColor="purple-light"
+                                  onClick={handleAddMinorComment}
+                                >
+                                  Post Reply
+                                </Button>
+                              </div>
+                            </div>
                           </div>
-                          <Button
-                            className="w-[117px] mb-6"
-                            btnColor="purple-light"
-                            onClick={handleAddMinorComment}
-                          >
-                            Post Reply
-                          </Button>
+
+                          <div className="xs:hidden">
+                            <Button
+                              className="w-[117px] mb-6"
+                              btnColor="purple-light"
+                              onClick={handleAddMinorComment}
+                            >
+                              Post Reply
+                            </Button>
+                          </div>
                         </div>
                       )}
                   </div>
@@ -246,7 +277,7 @@ const CommentDetail = ({
 
           {/* Conditionally render the horizontal line, except for the last comment */}
           {index !== commentItems.length - 1 && (
-            <hr className="w-[666px] border-1 bg-[#8C92B3] bg-opacity-25 mt-4" />
+            <hr className="w-[666px] border-1 bg-[#8C92B3] bg-opacity-25 mt-4 xs:w-[280px]" />
           )}
         </div>
       ))}
