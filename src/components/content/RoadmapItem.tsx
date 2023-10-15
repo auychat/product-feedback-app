@@ -10,7 +10,7 @@ interface RoadmapItemProps {
   status: string;
 }
 
-const RoadmapItem = ({ roadmapItems, status }: RoadmapItemProps) => {
+const RoadmapItem = ({ roadmapItems, status,}: RoadmapItemProps) => {
   const CommentCount = roadmapItems?.map((product) => {
     let totalComment = product.comments?.length ?? 0;
     if (product.comments) {
@@ -37,23 +37,23 @@ const RoadmapItem = ({ roadmapItems, status }: RoadmapItemProps) => {
       </div>
       {roadmapItems.map((item, index) => (
         <div
-          key={item.id}
-          className="bg-white min-h-[272px] rounded-[10px] shadow-sm"
+        key={item.id}
+        className="bg-white min-h-[272px] rounded-[10px] shadow-sm"
         >
           <hr
             className={`h-[6px] w-full rounded-t-[10px] ${(() => {
               switch (status) {
                 case "Planned":
                   return "bg-orange-accent";
-                case "In-Progress":
-                  return "bg-purple-light";
-                case "Live":
-                  return "bg-cyan-accent";
-                default:
-                  return ""; // Default case for any other status
-              }
-            })()}`}
-          />
+                  case "In-Progress":
+                    return "bg-purple-light";
+                    case "Live":
+                      return "bg-cyan-accent";
+                      default:
+                        return ""; // Default case for any other status
+                      }
+                    })()}`}
+                    />
 
           {/* Status */}
           <div className="p-8 flex flex-col gap-4">
@@ -65,13 +65,13 @@ const RoadmapItem = ({ roadmapItems, status }: RoadmapItemProps) => {
                       return "bg-orange-accent";
                     case "In-Progress":
                       return "bg-purple-light";
-                    case "Live":
+                      case "Live":
                       return "bg-cyan-accent";
                     default:
                       return ""; // Default case for any other status
-                  }
+                    }
                 })()}`}
-              />
+                />
               <p className="text-b1 text-gray-text font-normal">
                 {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
               </p>
@@ -100,7 +100,7 @@ const RoadmapItem = ({ roadmapItems, status }: RoadmapItemProps) => {
               <Link
                 href={`/feedback-detail/${item.id}`}
                 className="flex items-center"
-              >
+                >
                 <Comment commentCount={CommentCount[index]} />
               </Link>
             </div>
@@ -108,6 +108,7 @@ const RoadmapItem = ({ roadmapItems, status }: RoadmapItemProps) => {
         </div>
       ))}
     </div>
+      
   );
 };
 

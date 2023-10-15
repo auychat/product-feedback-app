@@ -37,7 +37,7 @@ const CategoryTag = ({
       }`}
     >
       <p
-        className={` font-bold text-[13px] leading-normal traking-[-0.18px] ${
+        className={` font-bold text-b3 text-[13px] leading-normal traking-[-0.18px] ${
           isActive && !preventActive ? "text-white" : "text-blue-primary"
         } `}
       >

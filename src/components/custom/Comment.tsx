@@ -17,7 +17,7 @@ const Comment = ({commentCount}: CommentProps) => {
       </svg>
       {/* Comment Count Number */}
       <p
-        className={`text-b1 text-blue-dark font-bold ${
+        className={`text-b1 text-blue-dark font-bold xs:text-b3 ${
           commentCount === 0 || commentCount === undefined
             ? "text-opacity-50"
             : "text-opacity-100"
