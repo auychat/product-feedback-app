@@ -29,7 +29,7 @@ const Select = ({ defaultOption }: SelectProps) => {
   return (
     <div
       onClick={() => setIsOpen(!isOpen)}
-      className="relative w-[194px] h-[72px] rounded-[10px] bg-blue-secondary flex items-center justify-center cursor-pointer xs:w-[149px] xs:h-[56px]"
+      className="relative w-[194px] h-[72px] rounded-[10px] bg-blue-secondary flex items-center justify-center cursor-pointer xs:w-[149px] xs:h-[56px] xs:z-[0]"
     >
       <div className="flex items-center justify-center gap-2">
         <p

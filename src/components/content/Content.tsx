@@ -10,7 +10,7 @@ const Content = () => {
   // const suggestionCount = 0;
 
   return (
-    <div className="w-[825px] rounded-[10px] xs:min-w-[327px] xs:max-w-full">
+    <div className="rounded-[10px] xs:min-w-[327px] ">
       <div className="flex flex-col gap-6">
         <Header />
         <div className="xs:px-6 flex flex-col gap-4">

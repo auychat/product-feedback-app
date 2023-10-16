@@ -40,7 +40,7 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
               {/* Title description */}
               <div className="flex flex-col gap-3 max-w-[510px] whitespace-normal break-words xs:gap-2">
                 <Link href={`/feedback-detail/${product.id}`} className="flex flex-col gap-3">
-                  <h2 className="text-hm text-blue-dark hover:text-blue-primary xs:text-b3 xs:font-bold xs:tracking-[-0.18px]">
+                  <h2 className="text-hm text-blue-dark hover:text-blue-primary xs:text-hs xs:font-bold xs:tracking-[-0.18px]">
                     {product.title}
                   </h2>
                   <p className="text-b1 text-gray-text font-normal xs:text-b3 ">
@@ -63,7 +63,7 @@ const SuggestionItem = ({ feedbackItems }: SuggestionItemProps) => {
             {/* Comment */}
             <div className="flex items-center justify-between">
               {/* Upvote number */}
-              <div className="xs:block">
+              <div className="xs:block sm:hidden md:hidden lg:hidden xl:hidden">
                 <Upvote
                   initialUpvotes={product.upvotes}
                   feedbackId={product.id}

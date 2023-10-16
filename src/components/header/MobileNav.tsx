@@ -20,7 +20,7 @@ const MobileNav = () => {
           alt="background-header"
           className="w-auto h-auto z-0"
         />
-        <div className="absolute top-[20px] left-[24px] flex flex-col z-10">
+        <div className="absolute top-[20px] left-[24px] flex flex-col ">
           <h2 className="text-hm text-white xs:text-b2 xs:font-bold">
             Frontend Mentor
           </h2>
@@ -28,7 +28,7 @@ const MobileNav = () => {
         </div>
 
         <div
-          className="absolute top-[27px] right-[24px] z-10"
+          className="absolute top-[27px] right-[24px] cursor-pointer"
           onClick={toggleMenu}
         >
           {isShowMenu ? (

@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import Select from "../custom/Select";
 import Button from "../custom/Button";
 import { FeedbackContext } from "@/context/FeedbackContext";
@@ -14,7 +14,7 @@ const Header = () => {
       <div className="flex items-center justify-between">
         <div className="flex gap-6 items-center px-6 xs:px-0">
           {/* Suggesttions */}
-          <div className="flex gap-4 xs:hidden">
+          <div className="flex gap-4 xs:hidden sm:hidden">
             {/* Icon Suggestions */}
             <svg width="23" height="24" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -23,16 +23,23 @@ const Header = () => {
                 fillRule="nonzero"
               />
             </svg>
-            <h3 className="text-hm text-white">{suggestionCount} Suggestions</h3>
+            <h3 className="text-hm text-white">
+              {suggestionCount} Suggestions
+            </h3>
           </div>
 
           {/* Sort by */}
+
           <Select defaultOption={sortingCriteria} />
         </div>
 
         {/* Button +Add Feedback */}
         <div className="pr-4 xs:pr-0">
-          <Button onClick={() => router.push("/new-feedback")} btnColor="purple-light" className="xs:w-[134px] xs:text-b3 xs:px-0">
+          <Button
+            onClick={() => router.push("/new-feedback")}
+            btnColor="purple-light"
+            className="xs:w-[134px] xs:text-b3 xs:px-0 sm:w-[134px] sm:text-b3 sm:px-0"
+          >
             + Add Feedback
           </Button>
         </div>

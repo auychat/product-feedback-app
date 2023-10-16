@@ -99,7 +99,7 @@ const RoadmapItemMobile = ({
                 href={`/feedback-detail/${item.id}`}
                 className="whitespace-normal break-words flex flex-col gap-3"
               >
-                <h3 className="font-bold text-b3 xs:tracking-[-0.18px] text-blue-dark">{item.title}</h3>
+                <h3 className="font-bold text-hs xs:tracking-[-0.18px] text-blue-dark">{item.title}</h3>
                 <p className="text-b3 font-normal text-gray-text">{item.description}</p>
               </Link>
 

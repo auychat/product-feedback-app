@@ -33,9 +33,9 @@ const Upvote = ({ initialUpvotes, feedbackId }: UpvoteProps) => {
   return (
     <button
       onClick={handleUpvoteClick}
-      className={`group w-[40px] h-[53px] bg-[#F2F4FE] hover:bg-[#CFD7FF] active:bg-[#4661E6] rounded-[10px] xs:w-[69px] xs:h-[32px]`}
+      className={`group w-[40px] h-[53px] bg-[#F2F4FE] hover:bg-[#CFD7FF] active:bg-[#4661E6] rounded-[10px] xs:w-[69px] xs:h-[32px] sm:w-[69px] sm:h-[32px] md:w-[69px] md:h-[32px]`}
     >
-      <div className="flex flex-col gap-2 items-center group-active:text-white group-active:stroke-white xs:flex-row xs:items-center xs:justify-center">
+      <div className="flex flex-col gap-2 items-center group-active:text-white group-active:stroke-white xs:flex-row xs:items-center xs:justify-center sm:flex-row sm:items-center sm:justify-center md:flex-row md:items-center md:justify-center">
         <svg
           width="10"
           height="7"

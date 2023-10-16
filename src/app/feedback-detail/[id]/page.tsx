@@ -43,8 +43,8 @@ const FeedbackDetail = () => {
   };
 
   return (
-    <div className="bg-gray-background">
-      <div className="max-w-[730px] min-h-[750px] mx-auto flex flex-col gap-6 pt-[94px] pb-[130px] xs:pb-[88px] xs:min-w-[375px] xs:max-w-[480px] xs:p-6">
+    <div className="bg-gray-background md:px-8">
+      <div className="max-w-[730px] min-h-[750px] mx-auto flex flex-col gap-6 pt-[94px] pb-[130px] xs:pb-[88px] xs:min-w-[375px] xs:max-w-[480px] xs:p-6 sm:pt-[56px] sm:pb-[110px] sm:px-[39px] md:pt-[56px] md:pb-[110px]">
         {/* Header */}
         <div className="h-[44px] w-full rounded-[10px] flex items-center justify-between xs:h-[40px]">
           <Button
@@ -57,7 +57,7 @@ const FeedbackDetail = () => {
           <Button
             onClick={() => router.push(`/edit-feedback/${params?.id}`)}
             btnColor="blue-primary"
-            className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0"
+            className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0 sm:w-[142px] sm:h-[44px] sm:px-0 sm:py-0"
           >
             Edit Feedback
           </Button>

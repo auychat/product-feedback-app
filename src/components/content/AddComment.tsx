@@ -56,7 +56,7 @@ const AddComment = ({onAddComment}: IAddComment) => {
         onChange={handleCommentChange}
         maxLength={maxCharacterCount}
         placeholder="Type your comment here"
-        className="bg-gray-background w-[664px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden break-word xs:min-w-[279px] xs:text-b3 xs:w-full"
+        className="bg-gray-background w-[664px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden break-word xs:min-w-[279px] xs:text-b3 xs:w-full sm:w-full"
         ref={textAreaRef}
       />
       <div className="flex justify-between items-center">
@@ -69,7 +69,7 @@ const AddComment = ({onAddComment}: IAddComment) => {
           btnColor="purple-light"
           onClick={() => {handleAddComment()}}
           disabled={comment.length===0}
-          className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0"
+          className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0 sm:w-[142px] sm:h-[44px] sm:px-0 sm:py-0"
         >
           Post Comment
         </Button>

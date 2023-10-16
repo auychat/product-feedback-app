@@ -96,13 +96,19 @@ const CommentDetail = ({
   const remainingMinorCharacter = maxCharacterCount - replyMinorComment.length;
 
   return (
-    <div className="w-full min-h-[150px] bg-white rounded-[10px] shadow-sm flex flex-col gap-8 p-8 xs:gap-6 xs:p-6">
-      <h3 className="text-hm text-blue-dark">{totalCommentCount} Comments</h3>
+    <div className="w-full min-h-[150px] bg-white rounded-[10px] shadow-sm flex flex-col gap-8 p-8 xs:gap-6 xs:p-6 sm:gap-6 sm:p-6">
+      <h3 className="text-hm text-blue-dark">
+        {totalCommentCount !== undefined
+          ? totalCommentCount === 1
+            ? `${totalCommentCount} Comment`
+            : `${totalCommentCount} Comments`
+          : "0 Comments"}
+      </h3>
 
       {commentItems?.map((comment, index) => (
         <div key={comment.id} className="flex flex-col gap-4 ">
           <div className="flex items-center justify-between">
-            <div className="flex gap-8 xs:gap-4">
+            <div className="flex gap-8 xs:gap-4 ">
               <div className="relative w-10 h-10 rounded-full">
                 <Image
                   src={comment.user.image}
@@ -127,25 +133,25 @@ const CommentDetail = ({
               Reply
             </button>
           </div>
-          <div className="w-full pl-[72px] relative xs:pl-0">
+          <div className="w-full pl-[72px] relative xs:pl-0 ">
             <p className="text-b2 text-gray-text font-normal xs:text-b3">
               {comment.content}
             </p>
 
             {/* Add new Reply Major Comment */}
             {majorReplyToCommentId === comment.id && isReplyMajorOpen && (
-              <div className="flex items-center justify-between gap-4 pt-6">
-                <div className="xs:flex xs:flex-col xs:w-full xs:gap-4">
+              <div className="flex items-center justify-between gap-4 pt-6 lg:max-w-[594px]">
+                <div className="flex flex-col w-full gap-4">
                   <textarea
                     id="reply-major-comment"
                     value={replyMajorComment}
                     onChange={handleCommentChange}
                     maxLength={maxCharacterCount}
-                    className="bg-gray-background w-[461px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden xs:min-w-[279px] xs:w-full xs:text-b3"
+                    className="bg-gray-background w-[461px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden xs:min-w-[279px] xs:w-full xs:text-b3 sm:w-full md:w-full lg:w-full xl:w-full"
                     ref={textAreaRef}
                   />
 
-                  <div className="xs:flex xs:items-center xs:justify-between">
+                  <div className="flex items-center justify-between">
                     <p
                       id="charCount"
                       className="text-b2 text-gray-text font-normal xs:text-b3"
@@ -153,9 +159,9 @@ const CommentDetail = ({
                       remainingMajorCharacter > 1 ? "s" : ""
                     } left`}</p>
 
-                    <div className="xs:block">
+                    <div className="xs:block sm:block md:block lg:hidden xl:hidden">
                       <Button
-                        className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0"
+                        className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0 sm:w-[142px] sm:h-[44px] sm:px-0 sm:py-0"
                         btnColor="purple-light"
                         onClick={() => handleAddMajorComment(comment.user)}
                       >
@@ -165,7 +171,7 @@ const CommentDetail = ({
                   </div>
                 </div>
 
-                <div className="xs:hidden">
+                <div className="xs:hidden sm:hidden md:hidden">
                   <Button
                     className="w-[117px] mb-6"
                     btnColor="purple-light"
@@ -182,7 +188,7 @@ const CommentDetail = ({
             {Array.isArray(comment.replies) && comment.replies?.length > 0 && (
               <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)] xs:top-[125px] xs:left-[-20px] xs:h-[calc(25%)]" />
             )}
-            <div className="translate-x-[-28px] w-[621px] xs:translate-x-[23px] xs:min-w-[256px] xs:w-full xs:pr-6">
+            <div className="translate-x-[-28px] xs:translate-x-[23px] xs:min-w-[256px] xs:w-full xs:pr-6  w-[calc(100%+28px)]">
               {comment.replies?.map((reply, index) => (
                 <div key={index} className="flex flex-col gap-4 w-full pt-8">
                   <div className="flex items-center justify-between">
@@ -228,17 +234,17 @@ const CommentDetail = ({
                       comment.replies &&
                       index === comment.replies?.length - 1 && (
                         <div className="flex items-center justify-between gap-4 pt-6">
-                          <div className="xs:flex xs:flex-col xs:w-full xs:gap-4">
+                          <div className="flex flex-col w-full gap-4">
                             <textarea
                               id="reply-minor-comment"
                               value={replyMinorComment}
                               onChange={handleCommentChange}
                               maxLength={maxCharacterCount}
-                              className="bg-gray-background w-[416px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden xs:min-w-[256px] xs:w-full xs:text-b3"
+                              className="bg-gray-background w-[416px] min-h-[80px] p-4 rounded-[5px] text-b2 font-normal text-blue-dark focus:border focus:border-blue-primary focus:ring-blue-primary overflow-hidden xs:min-w-[256px] xs:w-full xs:text-b3 sm:w-full md:w-full lg:w-full xl:w-full"
                               ref={textAreaRef}
                             />
 
-                            <div className="xs:flex xs:items-center xs:justify-between">
+                            <div className="flex items-center justify-between">
                               <p
                                 id="minorCharCount"
                                 className="text-b2 text-gray-text font-normal xs:text-b3"
@@ -246,9 +252,9 @@ const CommentDetail = ({
                                 remainingMinorCharacter > 1 ? "s" : ""
                               } left`}</p>
 
-                              <div className="xs:block">
+                              <div className="xs:block sm:block md:block lg:hidden xl:hidden">
                                 <Button
-                                  className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0"
+                                  className="xs:w-[119px] xs:h-[40px] xs:text-b3 xs:font-bold xs:px-0 xs:py-0 sm:w-[142px] sm:h-[44px] sm:px-0 sm:py-0"
                                   btnColor="purple-light"
                                   onClick={handleAddMinorComment}
                                 >
@@ -258,9 +264,9 @@ const CommentDetail = ({
                             </div>
                           </div>
 
-                          <div className="xs:hidden">
+                          <div className="xs:hidden sm:hidden md:hidden lg:block xl:block">
                             <Button
-                              className="w-[117px] mb-6"
+                              className="w-[117px] mb-6 "
                               btnColor="purple-light"
                               onClick={handleAddMinorComment}
                             >
@@ -277,7 +283,7 @@ const CommentDetail = ({
 
           {/* Conditionally render the horizontal line, except for the last comment */}
           {index !== commentItems.length - 1 && (
-            <hr className="w-[666px] border-1 bg-[#8C92B3] bg-opacity-25 mt-4 xs:w-[280px]" />
+            <hr className="w-auto border-1 bg-[#8C92B3] bg-opacity-25 mt-4 xs:w-[280px]" />
           )}
         </div>
       ))}

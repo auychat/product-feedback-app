@@ -26,7 +26,7 @@ const SuggestStatus = () => {
   }, [allFeedback]);
 
   return (
-    <div className="w-[255px] min-h-[166px] p-6 bg-white rounded-[10px] shadow-sm xs:w-[223px]">
+    <div className="w-[255px] min-h-[166px] p-6 bg-white rounded-[10px] shadow-sm xs:w-[223px] sm:w-[223px] sm:pt-6 sm:pl-6 sm:pr-4">
       <div className="flex justify-between items-center">
         <h2 className="text-hm text-blue-dark">Roadmap</h2>
         <Link
