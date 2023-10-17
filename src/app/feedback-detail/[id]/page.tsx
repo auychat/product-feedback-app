@@ -7,6 +7,7 @@ import SuggestionItem from "@/components/content/SuggestionItem";
 import { FeedbackContext } from "@/context/FeedbackContext";
 import CommentDetail from "@/components/content/CommentDetail";
 import AddComment from "@/components/content/AddComment";
+import NotFound from "@/components/custom/NotFound";
 
 const FeedbackDetail = () => {
   const router = useRouter();
@@ -41,6 +42,10 @@ const FeedbackDetail = () => {
       router.push("/");
     }
   };
+
+  if (selectedItem.length === 0) {
+    return <NotFound />;
+  }
 
   return (
     <div className="bg-gray-background md:px-8">

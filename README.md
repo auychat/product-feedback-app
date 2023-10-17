@@ -27,14 +27,14 @@ Users should be able to:
 - **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
 
 ### Screenshot
-![Desktoplight](./screenshots/Screenshot-kanban-desktop-light.png)
-![Desktopdark](./screenshots/Screenshot-kanban-desktop-dark.png)
-![hideLight](./screenshots/Screenshot-kanban-hide-white.png)
-![hideDark](./screenshots/Screenshot-kanban-hide-dark.png)
+![Desktop](./public/screenshot-product-feedback-app-desktop.png)
+![Tablet](./public/screenshot-product-feedback-app-tablet.png)
+![Mobile](./public/screenshot-product-feedback-app-mobile.png)
+
 
 ### Links
 - Solution URL: [Solution URL](https://github.com/auychat/product-feedback-app)
-- Live Site URL: [Live site]()
+- Live Site URL: [Live site](https://product-feedback-app-ashy.vercel.app/)
 
 ## My process
 

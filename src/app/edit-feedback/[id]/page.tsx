@@ -9,6 +9,7 @@ import { FeedbackContext } from "@/context/FeedbackContext";
 import { IEditFeedback } from "@/context/FeedbackInterface";
 import { useForm, Controller, set } from "react-hook-form";
 import DeleteModal from "@/components/custom/DeleteModal";
+import NotFound from "@/components/custom/NotFound";
 
 const EditFeedback = () => {
   const router = useRouter();
@@ -79,7 +80,11 @@ const EditFeedback = () => {
 
   // Return 404 if the feedback is not found
   if (selectedFeedback.length === 0) {
-    return notFound();
+    return(
+      <>
+        <NotFound />
+      </>
+    )
   }
 
   return (

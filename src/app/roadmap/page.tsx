@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState, useEffect, use } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Button from "@/components/custom/Button";
 import { FeedbackContext } from "@/context/FeedbackContext";
 import { useRouter } from "next/navigation";
