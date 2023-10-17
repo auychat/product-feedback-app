@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext, use } from "react";
 import { IComments, IUser } from "@/context/FeedbackInterface";
 import Image from "next/image";
 import Button from "../custom/Button";
 import { FeedbackContext } from "@/context/FeedbackContext";
+import { useMediaQuery } from "react-responsive";
 
 interface commentDetailProps {
   commentItems?: IComments[];
@@ -24,10 +25,14 @@ const CommentDetail = ({
     number | null
   >(null);
   const [minorReplyToUser, setMinorReplyToUser] = useState<string>("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  const isMobileView = useMediaQuery({ query: "(max-width: 480px)" });
 
   const { addReplyMajorComment, addReplyMinorComment } =
     useContext(FeedbackContext);
 
+  const lastReplyCommentImageRef = useRef<HTMLImageElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const maxCharacterCount = 250;
 
@@ -91,9 +96,12 @@ const CommentDetail = ({
       setIsReplyMinorOpen(false);
     }
   };
-
   const remainingMajorCharacter = maxCharacterCount - replyMajorComment.length;
   const remainingMinorCharacter = maxCharacterCount - replyMinorComment.length;
+
+  useEffect(() => {
+    setIsMobile(isMobileView);
+  }, [isMobileView]);
 
   return (
     <div className="w-full min-h-[150px] bg-white rounded-[10px] shadow-sm flex flex-col gap-8 p-8 xs:gap-6 xs:p-6 sm:gap-6 sm:p-6">
@@ -134,9 +142,18 @@ const CommentDetail = ({
             </button>
           </div>
           <div className="w-full pl-[72px] relative xs:pl-0 ">
-            <p className="text-b2 text-gray-text font-normal xs:text-b3">
-              {comment.content}
-            </p>
+            <div className="relative">
+              <p className="text-b2 text-gray-text font-normal xs:text-b3 ">
+                {comment.content}
+              </p>
+
+              {/* For Vertical Line of Comment */}
+              {!isMobile &&
+                Array.isArray(comment.replies) &&
+                comment.replies?.length > 0 && (
+                  <div className="absolute top-0 left-[-51px] h-full border-l border-gray-text border-opacity-10" />
+                )}
+            </div>
 
             {/* Add new Reply Major Comment */}
             {majorReplyToCommentId === comment.id && isReplyMajorOpen && (
@@ -184,16 +201,27 @@ const CommentDetail = ({
             )}
             {/* End of Reply Major Comment */}
 
-            {/*Start Reply Minor Comment */}
-            {Array.isArray(comment.replies) && comment.replies?.length > 0 && (
-              <div className="absolute top-0 left-0 border-l border-gray-text border-opacity-10 translate-x-5 h-[calc(100%-100px)] xs:top-[125px] xs:left-[-20px] xs:h-[calc(25%)]" />
-            )}
-            <div className="translate-x-[-28px] xs:translate-x-[23px] xs:min-w-[256px] xs:w-full xs:pr-6  w-[calc(100%+28px)]">
+            <div
+              className="translate-x-[-28px] xs:translate-x-[23px] xs:min-w-[256px] xs:w-full xs:pr-6 w-[calc(100%+28px)] relative"
+              ref={lastReplyCommentImageRef}
+            >
               {comment.replies?.map((reply, index) => (
-                <div key={index} className="flex flex-col gap-4 w-full pt-8">
+                <div
+                  key={index}
+                  className="flex flex-col gap-4 w-full pt-8 relative"
+                >
+                  {/* For Vertical Line of Reply Comment */}
+                  {comment.replies && index !== comment.replies?.length - 1 && (
+                    <div className="absolute top-0 left-[-23px] h-[calc(100%)] border-l border-gray-text border-opacity-10" />
+                  )}
                   <div className="flex items-center justify-between">
                     <div className="flex gap-8 xs:gap-4">
                       <div className="relative w-10 h-10 rounded-full">
+                        {/* For Vertical Line of Reply Comment */}
+                        {comment.replies &&
+                          index === comment.replies.length - 1 && (
+                            <div className="absolute top-[-32px] left-[-23px] h-[52px] border-l border-gray-text border-opacity-10" />
+                          )}
                         <Image
                           src={reply.user.image}
                           alt={reply.user.name}
@@ -247,7 +275,7 @@ const CommentDetail = ({
                             <div className="flex items-center justify-between">
                               <p
                                 id="minorCharCount"
-                                className="text-b2 text-gray-text font-normal xs:text-b3"
+                                className="text-b2 text-gray-text font-normal xs:text-b3 "
                               >{`${remainingMinorCharacter} Character${
                                 remainingMinorCharacter > 1 ? "s" : ""
                               } left`}</p>
