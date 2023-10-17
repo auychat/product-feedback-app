@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Frontend Mentor - Product feedback app solution created by chr-dev(Chatcharin Rangsisawat)
 
-## Getting Started
+This is a solution to the [Product feedback app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/product-feedback-app-wbvUYqjR6). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-First, run the development server:
+## Table of contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+- [Author](#author)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### The challenge
+Users should be able to:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- View the optimal layout for the app depending on their device's screen size
+- See hover states for all interactive elements on the page
+- Create, read, update, and delete product feedback requests
+- Receive form validations when trying to create/edit feedback requests
+- Sort suggestions by most/least upvotes and most/least comments
+- Filter suggestions by category
+- Add comments and replies to a product feedback request
+- Upvote product feedback requests
+- **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Screenshot
+![Desktoplight](./screenshots/Screenshot-kanban-desktop-light.png)
+![Desktopdark](./screenshots/Screenshot-kanban-desktop-dark.png)
+![hideLight](./screenshots/Screenshot-kanban-hide-white.png)
+![hideDark](./screenshots/Screenshot-kanban-hide-dark.png)
 
-## Learn More
+### Links
+- Solution URL: [Solution URL](https://github.com/auychat/product-feedback-app)
+- Live Site URL: [Live site]()
 
-To learn more about Next.js, take a look at the following resources:
+## My process
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Built with
+- [Next.js](https://nextjs.org/) - React framework
+- [Tailwind CSS](https://tailwindcss.com/) - For styles
+- [ReactHookForm](https://react-hook-form.com/) - For form validation
+- [react-responsive](https://github.com/yocontra/react-responsive) - For CSS media queries in react
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### What I learned
+During my work on the Product Feedback App challenge, I had the opportunity to gain valuable experience in various aspects of web development:
 
-## Deploy on Vercel
+- **React State Management:** I deepened my understanding of state management in React. I effectively utilized state to monitor feedback queries, separate functions within the context, and manage their respective statuses, resulting in a dynamic and interactive user interface.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Responsive Design:** Implementing responsive design principles proved essential to ensure the app's seamless functionality across a range of screen sizes. I mastered the use of media queries to adapt the layout and styling, and I employed the `react-responsive` library to detect mobile devices.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Form Validation:** I successfully implemented form validation for both creating and editing feedback. This enhancement guarantees that users receive meaningful feedback during their interactions with the app.
+
+- **Dynamic Vertical Line CSS:** I acquired a new skill in creating dynamic vertical lines based on reply comments. This added feature provides an engaging and visually appealing aspect to the app's interface.
+
+## Author
+- Frontend Mentor - [@auychat](https://www.frontendmentor.io/profile/auychat)
+- Linkedin Profile - [@Chatcharin](https://www.linkedin.com/in/chatcharin-rangsisawat-9b42ba184/)
